@@ -5,9 +5,7 @@ Classement :
 - Classement -> Médaille pour les 3 premiers
 
 Tchat :
-- Bug HistoryBuff --100-- tchat
-- Lorsque l'on crée une discussion avec une personne qui n'existe pas -> ???
-- Si la personne t'a bloqué, tu peux pas le mp
+- Si la personne t'a bloqué, tu peux pas continuer à le mp
 
 Thème :
 - Commentaire après un thème

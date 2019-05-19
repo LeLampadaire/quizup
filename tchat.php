@@ -27,7 +27,7 @@
 	if(isset($_POST['membres-list-choice']) && !empty($_POST['membres-list-choice'])){
 		$recherche_membre = $_POST['membres-list-choice']; // Récupère le nom de la personne entré dans la recherche
 		$requete_recherche = mysqli_query($bdd, 'SELECT idProfil FROM profil where nomProfil ="'.$recherche_membre.'";');
-		$requete_ok =  mysqli_fetch_array($requete_recherche, MYSQLI_ASSOC); // Recupère l'id du joueur entré dans la recherche
+		$requete_ok = mysqli_fetch_array($requete_recherche, MYSQLI_ASSOC); // Recupère l'id du joueur entré dans la recherche
 		$recherche_on = 1;
 	}
 ?>
@@ -112,6 +112,14 @@
 											<?php 
 												
 												$listetchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND ('.$idPseudo.' = chat_msg.idProfil_recepteur OR '.$idPseudo.' = chat_msg.idProfil_emetteur) AND '.$idPseudo.' <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
+
+												$verif_bloquage = mysqli_query($bdd, 'SELECT idProfil FROM bloquer WHERE idProfil_1 = '.$idPseudo.';');
+												
+												foreach($verif_bloquage as $recherchebloquage){ // Vérifie que la personne ne vous aie pas bloqué
+													if($recherche_on == 1 && $requete_ok['idProfil'] == $recherchebloquage['idProfil']){
+														$recherche_on = 0;
+													}
+												}
 
 												foreach($listetchat as $recherche){ // Vérifie que la création de la nouvelle discussion ne soit pas déjà la
 													if($recherche_on == 1 && $recherche_membre == $recherche['nomProfil']){
@@ -261,9 +269,7 @@
 																	<?php echo htmlspecialchars(utf8_encode($donnees['contenu'])); ?>
 															</div>
 														</div>
-													<?php } 
-													
-													?>
+													<?php } ?>
 
 												</div>
 											<?php } ?>
