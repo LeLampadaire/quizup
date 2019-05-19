@@ -12,7 +12,7 @@
 
 	/**********************************CLASSEMENT GENERAL*******************************/
 
-	$gen1 = mysqli_query($bdd, 'SELECT profil.idProfil ,profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND question.idTheme = '.$_GET['idtheme'].' GROUP BY profil.idProfil, profil.nomProfil');
+	$gen1 = mysqli_query($bdd, 'SELECT profil.idProfil ,profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND question.idTheme = '.$_GET['idtheme'].' GROUP BY profil.idProfil, profil.nomProfil ORDER BY SUM(repondre.points) DESC');
 	$i=0;
 	$gen1_tab = array();
 	while ($recup = mysqli_fetch_array($gen1, MYSQLI_ASSOC))
@@ -27,7 +27,7 @@
 
 	/**********************************CLASSEMENT GENERAL DU MOIS PASSÉ*******************************************/
 
-	$gen2 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)-1) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) GROUP BY profil.idProfil, profil.nomProfil;');
+	$gen2 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)-1) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) GROUP BY profil.idProfil, profil.nomProfil ORDER BY SUM(repondre.points) DESC;');
 	$i = 0;
 	while($recup = mysqli_fetch_array($gen2, MYSQLI_ASSOC)) 
 	{
@@ -40,7 +40,7 @@
 	}
 	/**********************************CLASSEMENT GENERAL DU MOIS COURANT*****************************************/
 
-	$gen3 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) GROUP BY profil.idProfil, profil.nomProfil;');
+	$gen3 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) GROUP BY profil.idProfil, profil.nomProfil ORDER BY SUM(repondre.points) DESC;');
 	$i = 0;
 	while($recup = mysqli_fetch_array($gen3, MYSQLI_ASSOC)) 
 	{
@@ -53,7 +53,7 @@
 	}
 	/**********************************CLASSEMENT PAR PAYS********************************************************/
 
-	$gen4 = mysqli_query($bdd, 'SELECT profil.idProfil ,profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND question.idTheme = '.$_GET['idtheme'].' AND profil.idPays = '.(int)$user['idPays'].' GROUP BY profil.idProfil, profil.nomProfil');
+	$gen4 = mysqli_query($bdd, 'SELECT profil.idProfil ,profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND question.idTheme = '.$_GET['idtheme'].' AND profil.idPays = '.(int)$user['idPays'].' GROUP BY profil.idProfil, profil.nomProfil ORDER BY SUM(repondre.points) DESC');
 	$i=0;
 	$gen4_tab = array();
 	while ($recup = mysqli_fetch_array($gen4, MYSQLI_ASSOC))
@@ -67,7 +67,7 @@
 	}
 	/**********************************CLASSEMENT PAR PAYS DU MOIS PASSÉ******************************************/
 
-	$gen5 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)-1) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) AND profil.idPays = '.(int)$user['idPays'].' GROUP BY profil.idProfil, profil.nomProfil;');
+	$gen5 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)-1) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) AND profil.idPays = '.(int)$user['idPays'].' GROUP BY profil.idProfil, profil.nomProfil ORDER BY SUM(repondre.points) DESC;');
 	$i = 0;
 	while($recup = mysqli_fetch_array($gen5, MYSQLI_ASSOC)) 
 	{
@@ -80,7 +80,7 @@
 	}
 	/**********************************CLASSEMENT PAR PAYS DU MOIS COURANT****************************************/
 
-	$gen6 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) AND profil.idPays = '.(int)$user['idPays'].' GROUP BY profil.idProfil, profil.nomProfil;');
+	$gen6 = mysqli_query($bdd, 'SELECT profil.idProfil, profil.nomProfil, SUM(repondre.points) AS nb_point FROM profil, participer, partie, repondre, question WHERE profil.idProfil = participer.idProfil AND participer.idPartie = partie.idPartie AND partie.idPartie = repondre.idPartie AND repondre.idQuestion = question.idQuestion AND repondre.idProfil = repondre.idProfil AND question.idTheme = '.$_GET['idtheme'].' AND EXTRACT(MONTH FROM partie.timestampPartie) = (EXTRACT(MONTH FROM CURRENT_DATE)) AND EXTRACT(YEAR FROM partie.timestampPartie) = EXTRACT(YEAR FROM CURRENT_DATE) AND profil.idPays = '.(int)$user['idPays'].' GROUP BY profil.idProfil, profil.nomProfil ORDER BY SUM(repondre.points) DESC;');
 	$i = 0;
 	while($recup = mysqli_fetch_array($gen6, MYSQLI_ASSOC)) 
 	{
