@@ -1,6 +1,6 @@
 <!-- Tête de page  dans nav fixed-top-->
 <?php 
-		$bdd = mysqli_connect("localhost", "root", "", "quizup");
+		$bdd = mysqli_connect("185.157.246.42:3306", "quizup", "Ex6v1z6~", "quizup");
 	
 		if(isset($_SESSION['idprofil']) && !empty($_SESSION['idprofil']))
 		{
