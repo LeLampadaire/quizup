@@ -99,8 +99,8 @@
         <div class="card-footer">
           <?php
             echo '<a href="ajouter_question.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Ajouter une question".'</button></a>';
+            echo '<a href="menu_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-left">'."Retour".'</button></a>';
           ?>
-          <a href="themes.php"><button class="btn btn-dark float-left">Retour</button></a>
         </div>
     </section>
 

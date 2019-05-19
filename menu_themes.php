@@ -40,8 +40,8 @@
                 echo '<a href="creation_partie.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Play".'</button></a>';
                 echo '<a href="suivre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Suivre".'</button></a>';
                 echo '<a href="mise_a_jour_Themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Modifier".'</button></a>';
-                echo '<a href="ajouter_question.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Ajouter une question".'</button></a>';
-                echo '<a href="liste_question.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Liste des questions".'</button></a><br><br>';
+                
+                echo '<a href="supprimer_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Supprimer ce thème".'</button></a><br><br>';
               }
 
               if(empty($ancien_themes['ancienDescription'])){
@@ -55,7 +55,9 @@
         </div>
 
         <div class="card-footer">
-          <a href="ajout_themes.php"><button class="btn btn-dark float-right">Ajouter un theme</button></a>
+          <?php
+            echo '<a href="liste_question.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Liste des questions".'</button></a>';
+          ?>
           <a href="themes.php"><button class="btn btn-dark float-left">Retour</button></a>
         </div>
     </section>

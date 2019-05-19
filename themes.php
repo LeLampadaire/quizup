@@ -27,10 +27,10 @@
         </div>
         <div class="card-body">
           <?php 
-            if(!empty($_GET) && $_GET['erreur'] == 1){
-              echo '<div class="alert alert-danger" role="alert">
-                      Vous devez être connecté pour pouvoir lancer une partie !
-                    </div>';
+            if(isset($_GET['erreur']) && $_GET['erreur'] == 1){
+              echo '<div class="alert alert-danger" role="alert">';
+              echo 'Ce thème ne peut pas être supprimé car il possède au-moins une question !';
+              echo '</div>';
             }
            ?>
           <?php
@@ -47,7 +47,8 @@
         </div>
 
         <div class="card-footer">
-          <a href="ajout_themes.php"><button class="btn btn-dark">Ajouter un theme</button></a>
+          <a href="index.php"><button class="btn btn-dark float-left">Accueil</button></a>
+          <a href="ajout_themes.php"><button class="btn btn-dark float-right">Ajouter un thème</button></a>
         </div>
     </section>
 
