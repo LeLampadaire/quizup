@@ -1,0 +1,7 @@
+- Commentaire après un thème
+- Classement -> Médaille pour les 3 premiers
+- Lorsque l'on crée une discussion avec une personne qui n'existe pas -> ???
+- Bug HistoryBuff --100-- tchat
+
+Question : 
+- Comment faire pour que le message passe en lu ? (Dès l'envoi d'un message on passe les anciens message en lu ? ou en javascript, dès qu'il arrive sur la page on mets le message à lu ?)
