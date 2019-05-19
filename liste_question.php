@@ -8,6 +8,11 @@
     $question = mysqli_query($bdd, 'SELECT question.idQuestion, question.libelleQuestion, question.answer, question.distracteur01, question.distracteur02, question.distracteur03 FROM question INNER JOIN theme ON (question.idTheme = theme.idTheme) WHERE '.$_GET['idtheme'].' = question.idTheme;');
 
     $theme_class = "active";
+    if(isset($_GET['erreur']) && $_GET['erreur'] == 1){
+        echo '<div class="alert alert-danger" role="alert">';
+        echo 'Cette question ne peut pas être supprimée car elle fait partie déjà partie d\'une partie';
+        echo '</div>';
+    }
     ?>
 
 <head>
@@ -71,9 +76,13 @@
                                 echo 'Distracteur 1 : ' . $recup['distracteur01'] . '<br>';
                                 echo 'Distracteur 2 : ' . $recup['distracteur02'] . '<br>';
                                 echo 'Distracteur 3 : ' . $recup['distracteur03'];
+                                $idquestiontemp = $recup['idQuestion'];
                             ?>
                         </div>
                         <div class="modal-footer">
+                            <?php
+                                echo '<a href="mise_a_jour_Question.php?idtheme='.$_GET['idtheme'].'&idquestion='.$idquestiontemp.'"><button type="button" class="btn btn-secondary">Modifier</button></a>';
+                            ?>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         </div>
                         </div>
