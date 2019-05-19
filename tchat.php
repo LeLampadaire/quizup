@@ -111,7 +111,7 @@
 
 											<?php 
 												
-												$listetchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND (31 = chat_msg.idProfil_recepteur OR 31 = chat_msg.idProfil_emetteur) AND 31 <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
+												$listetchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND ('.$idPseudo.' = chat_msg.idProfil_recepteur OR '.$idPseudo.' = chat_msg.idProfil_emetteur) AND '.$idPseudo.' <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
 
 												foreach($listetchat as $recherche){ // Vérifie que la création de la nouvelle discussion ne soit pas déjà la
 													if($recherche_on == 1 && $recherche_membre == $recherche['nomProfil']){
@@ -208,7 +208,7 @@
 									<?php	} ?>
 
 									<?php 
-										$listtchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND (31 = chat_msg.idProfil_recepteur OR 31 = chat_msg.idProfil_emetteur) AND 31 <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
+										$listtchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND ('.$idPseudo.' = chat_msg.idProfil_recepteur OR '.$idPseudo.' = chat_msg.idProfil_emetteur) AND '.$idPseudo.' <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
 										
 										foreach($listtchat as $tchat_donnees){
 											$nomReplace = str_replace(" ","_",$tchat_donnees['nomProfil']);
