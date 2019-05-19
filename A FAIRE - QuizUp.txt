@@ -14,11 +14,10 @@ Header :
 
 Thème :
 - Commentaire après un thème
+- Upload des images dans notre bdd
 
 Vérification :
 - Vérif toute les regex
 
 Update :
-- mysqli_close() en fin de chaque fichier qui utilise la bdd
 - Pour chaque données encodés par l'utilisateur, la protéger avec htmlof..char
-- Upload des images dans notre bdd
