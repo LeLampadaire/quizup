@@ -1,7 +1,27 @@
-- Commentaire aprËs un thËme
-- Classement -> MÈdaille pour les 3 premiers
-- Lorsque l'on crÈe une discussion avec une personne qui n'existe pas -> ???
-- Bug HistoryBuff --100-- tchat
+Profil :
+- V√©rifier si il peut ne rien mettre dans les input (NULL)
+- Opacity des boutons
 
-Question : 
-- Comment faire pour que le message passe en lu ? (DËs l'envoi d'un message on passe les anciens message en lu ? ou en javascript, dËs qu'il arrive sur la page on mets le message ‡ lu ?)
+Classement :
+- Classement -> M√©daille pour les 3 premiers
+
+Tchat :
+- Bug HistoryBuff --100-- tchat
+- Lorsque l'on cr√©e une discussion avec une personne qui n'existe pas -> ???
+- Si la personne t'a bloqu√©, tu peux pas le mp
+
+Header :
+- Lorsque l'on est sur une page, montrer dans l'header de page sur quel onglet on est
+
+Th√®me :
+- Commentaire apr√®s un th√®me
+
+V√©rification :
+- V√©rif toute les regex
+- V√©rifier les contraintes du profil
+
+Update :
+- Remplacer les SYSDATE -> CURRENTDATE
+- mysqli_close() en fin de chaque fichier qui utilise la bdd
+- Pour chaque donn√©es encod√©s par l'utilisateur, la prot√©ger avec htmlof..char
+- Upload des images dans notre bdd
