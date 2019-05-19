@@ -230,6 +230,7 @@
 											$nomReplace = str_replace("&","_",$nomReplace);
 											$nomReplace = str_replace("#","_",$nomReplace);
 											$nomReplace = str_replace(",","_",$nomReplace);
+
 											$tchat_do = $tchat_donnees['idProfil'];
 										?>
 
@@ -274,17 +275,27 @@
 												</div>
 											<?php } ?>
 										
-											<div style="position: absolute; bottom: 0; width: 90%;;">
-												<form action="tchat.php" method="POST">
-													<div class="input-group mb-3">
-														<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message">
-														<input type="hidden" name="recepteur" value="<?php echo $tchat_donnees['idProfil']; ?>">
-														<div class="input-group-append">
-															<input class="btn btn-primary" type="submit" value="Envoyez !">
+											<?php
+											$test = 0;
+											foreach($verif_bloquage as $recherchebloquage){ // Vérifie que la personne ne vous aie pas bloqué afin de bloquer ou pas l'envoi de message
+												if($tchat_do == $recherchebloquage['idProfil']){
+													$test = 1;
+												}
+											}
+											
+											if($test == 0){ ?>
+												<div style="position: absolute; bottom: 0; width: 90%;;">
+													<form action="tchat.php" method="POST">
+														<div class="input-group mb-3">
+															<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message">
+															<input type="hidden" name="recepteur" value="<?php echo $tchat_donnees['idProfil']; ?>">
+															<div class="input-group-append">
+																<input class="btn btn-primary" type="submit" value="Envoyez !">
+															</div>
 														</div>
-													</div>
-												</form>
-											</div>
+													</form>
+												</div>
+											<?php } ?>
 
 										</div>
 
