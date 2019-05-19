@@ -1,5 +1,4 @@
 Profil :
-- Vérifier si il peut ne rien mettre dans les input (NULL)
 - Opacity des boutons
 
 Classement :
@@ -18,10 +17,8 @@ Thème :
 
 Vérification :
 - Vérif toute les regex
-- Vérifier les contraintes du profil
 
 Update :
-- Remplacer les SYSDATE -> CURRENTDATE
 - mysqli_close() en fin de chaque fichier qui utilise la bdd
 - Pour chaque données encodés par l'utilisateur, la protéger avec htmlof..char
 - Upload des images dans notre bdd

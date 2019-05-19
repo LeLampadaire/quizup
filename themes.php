@@ -1,7 +1,7 @@
 <?php session_start() ; ?>
 <!DOCTYPE html>
 <html lang="fr">
-  	<?php require_once('config.php'); 
+  	<?php require_once('configuration.php'); 
     require_once('baseDeDonnee.php'); 
     $theme = mysqli_query($bdd, 'SELECT theme.idTheme, theme.libelleTheme FROM question, theme WHERE question.idTheme = theme.idTheme AND idProfil <> '.$_SESSION['idprofil'].' GROUP BY theme.idTheme, theme.libelleTheme HAVING COUNT(question.idQuestion) >= 7 ORDER BY libelleTheme ASC;');
 
