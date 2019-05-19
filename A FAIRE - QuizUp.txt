@@ -9,9 +9,6 @@ Tchat :
 - Lorsque l'on crée une discussion avec une personne qui n'existe pas -> ???
 - Si la personne t'a bloqué, tu peux pas le mp
 
-Header :
-- Lorsque l'on est sur une page, montrer dans l'header de page sur quel onglet on est
-
 Thème :
 - Commentaire après un thème
 - Upload des images dans notre bdd
