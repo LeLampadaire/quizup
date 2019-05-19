@@ -39,7 +39,9 @@
 	<div>
 		
     <!-- HEADER -->
-    <?php require_once('header.php'); ?>
+		<?php 
+		$connexion_class = "active";
+		require_once('header.php'); ?>
 
 
 		<!-- Contenu principale -->

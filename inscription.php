@@ -138,7 +138,9 @@
 	<div>
 		
     <!-- HEADER -->
-    <?php require_once('header.php'); ?>
+		<?php 
+		$inscription_class = "active";
+		require_once('header.php'); ?>
 
 
 		<!-- Contenu principale -->

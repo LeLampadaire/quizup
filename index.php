@@ -2,7 +2,9 @@
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    <?php require_once('configuration.php'); ?>
+		<?php require_once('configuration.php'); 
+					$index = "active";
+		?>
 <head>
 	<title><?php echo $nomSite; ?> - Accueil</title>
 	<meta charset="utf-8">

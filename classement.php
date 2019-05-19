@@ -59,7 +59,9 @@
 </head>
 <body class="bg-secondary">
 	<!-- HEADER -->
-    <?php require_once('header.php'); ?>
+		<?php
+		$classement_class = "active"; 
+		require_once('header.php'); ?>
 
     <!-- Contenu principale -->
     <section class="container text-center mt-5 text-white principale">

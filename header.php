@@ -44,7 +44,34 @@
 			$_SESSION['jours'] = $jours;
 		}
 	
-	
+	if(!isset($index))
+	{
+		$index = "";
+	}
+	if(!isset($theme_class))
+	{
+		$theme_class = "";
+	}
+	if(!isset($classement_class))
+	{
+		$classement_class = "";
+	}
+	if(!isset($profil_class))
+	{
+		$profil_class = "";
+	}
+	if(!isset($tchat_class))
+	{
+		$tchat_class = "";
+	}
+	if(!isset($connexion_class))
+	{
+		$connexion_class = "";
+	}
+	if(!isset($inscription_class))
+	{
+		$inscription_class = "";
+	}
 ?>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -57,14 +84,14 @@
 
   				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active">
+						<li class="nav-item <?php echo $index ?>">
 							<a class="nav-link" href="index.php">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="themes.php">Thèmes</a>
+							<a class="nav-link <?php echo $theme_class ?>" href="themes.php">Thèmes</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="classement.php">Classement</a>
+							<a class="nav-link <?php echo $classement_class ?>" href="classement.php">Classement</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav ">
@@ -77,10 +104,10 @@
 								if(!empty($_SESSION['idprofil']))
 								{
 									echo '	<li>
-												<a class="nav-link" href="profil.php?idprofil='.$_SESSION['idprofil'].'">Mon profil</a>
+												<a class="nav-link '.$profil_class.'" href="profil.php?idprofil='.$_SESSION['idprofil'].'">Mon profil</a>
 											</li>
 											<li>
-												<a class="nav-link" href="tchat.php">Tchat</a>
+												<a class="nav-link '.$tchat_class.'" href="tchat.php">Tchat</a>
 											</li>
 											<li class="nav-item">
 												<a class="nav-link" href="deconnexion.php">Deconnexion</a>
@@ -89,10 +116,10 @@
 								else
 								{
 									echo '	<li>
-												<a class="nav-link" href="connexion.php">Connexion</a>
+												<a class="nav-link '.$connexion_class.'" href="connexion.php">Connexion</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="inscription.php">Inscription</a>
+												<a class="nav-link '.$inscription_class.'" href="inscription.php">Inscription</a>
 											</li>';
 								}
 

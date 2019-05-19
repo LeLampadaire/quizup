@@ -136,7 +136,9 @@
 	<div>
 		
     <!-- HEADER -->
-    <?php require_once('header.php'); ?>
+		<?php 
+		$profil_class = "active";
+		require_once('header.php'); ?>
 
 
 		<!-- Contenu principale -->
