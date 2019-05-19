@@ -51,7 +51,6 @@
 
 		<!-- Contenu principale -->
 		<section class="container text-center mt-5 text-white principale">
-			
 
 			<div class="card text-center bg-dark">
 				<div class="card-header">
