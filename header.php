@@ -52,6 +52,10 @@
 	{
 		$theme_class = "";
 	}
+	if(!isset($categorie_class))
+	{
+		$categorie_class = "";
+	}
 	if(!isset($classement_class))
 	{
 		$classement_class = "";
@@ -89,6 +93,9 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link <?php echo $theme_class ?>" href="themes.php">Thèmes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link <?php echo $categorie_class ?>" href="categorie.php">Catégorie</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link <?php echo $classement_class ?>" href="classement.php">Classement</a>
