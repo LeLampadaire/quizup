@@ -1,18 +1,7 @@
 <?php 
 	session_start();
-?>
+	require_once('baseDeDonnee.php');
 
-<!DOCTYPE html>
-<html lang="fr">
-    <?php require_once('configuration.php'); ?>
-    <?php require_once('baseDeDonnee.php'); ?>
-<head>
-	<title><?php echo $nomSite; ?> - Tchat</title>
-	<meta charset="utf-8">
-  <?php require_once('styles.php'); ?>
-</head>
-
-<?php 
 	$Pseudo = $_SESSION['nomprofil'];
 	$idPseudo = $_SESSION['idprofil'];
 
@@ -43,6 +32,15 @@
 	}
 ?>
 
+<!DOCTYPE html>
+<html lang="fr">
+    <?php require_once('configuration.php'); ?>
+<head>
+	<title><?php echo $nomSite; ?> - Tchat</title>
+	<meta charset="utf-8">
+  <?php require_once('styles.php'); ?>
+</head>
+
 <body class="bg-secondary">
 	<div>
 		
@@ -55,13 +53,21 @@
 		<section class="container text-center mt-5 text-white principale">
 
 			<div class="card text-center bg-dark">
+
+
+
 				<div class="card-header">
 					<h2>Tchat</h2>
 				</div>
 
+
+
 				<div class="card-body">
 
 					<div class="row">
+
+
+
 
 						<div class="col-4">
 
@@ -105,26 +111,51 @@
 
 											<?php 
 												
-												$listetchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND ('.$idPseudo.' = chat_msg.idProfil_recepteur OR '.$idPseudo.' = chat_msg.idProfil_emetteur) ORDER BY chat_msg.idChatMsg DESC');
+												$listetchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND (31 = chat_msg.idProfil_recepteur OR 31 = chat_msg.idProfil_emetteur) AND 31 <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
 
-												foreach($listetchat as $recherche){
+												foreach($listetchat as $recherche){ // Vérifie que la création de la nouvelle discussion ne soit pas déjà la
 													if($recherche_on == 1 && $recherche_membre == $recherche['nomProfil']){
 														$recherche_on = 0;
 													}
 												}
-								
+
 												if($recherche_on == 1){
-													echo '<a class="list-group-item list-group-item-action" id="list-'.$recherche_membre.'-list" data-toggle="list" href="#list-'.$recherche_membre.'" role="tab" aria-controls="'.$recherche_membre.'">'.$recherche_membre.'</a>';
+													// Remplace les caractères si dessous afin de pouvoir lier les "list"
+													$nomReplaceRecherche = str_replace(" ","_",$recherche_membre);
+													$nomReplaceRecherche = str_replace(".","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("°","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("?","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("'","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("\"","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("@","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("!","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("&","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace("#","_",$nomReplaceRecherche);
+													$nomReplaceRecherche = str_replace(",","_",$nomReplaceRecherche);
+													echo '<a class="list-group-item list-group-item-action" id="list-'.$nomReplaceRecherche.'-list" data-toggle="list" href="#list-'.$nomReplaceRecherche.'" role="tab" aria-controls="'.$nomReplaceRecherche.'">'.$recherche_membre.'</a>';
 												}
 
 												foreach($listetchat as $donnees){
 													if($donnees['nomProfil'] != $Pseudo){
-														echo '<a class="list-group-item list-group-item-action" id="list-'.$donnees['nomProfil'].'-list" data-toggle="list" href="#list-'.$donnees['nomProfil'].'" role="tab" aria-controls="'.$donnees['nomProfil'].'">'.$donnees['nomProfil'].'';
-														$compteur = mysqli_query($bdd,'SELECT COUNT(idChatMsg)-SUM(lu) as Nbr FROM `chat_msg` WHERE idProfil_recepteur = '.$idPseudo.' AND idProfil_emetteur = '.$donnees['idProfil'].';');
-														$cpt = mysqli_fetch_array($compteur, MYSQLI_ASSOC);
-														if($cpt['Nbr'] != 0){
-															echo '   <span class="badge badge-pill badge-success">'.$cpt['Nbr'].'</span>';
-														}
+														$nomReplaceProfil = str_replace(" ","_",$donnees['nomProfil']);
+														$nomReplaceProfil = str_replace(".","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("°","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("?","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("'","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("\"","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("@","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("!","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("&","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace("#","_",$nomReplaceProfil);
+														$nomReplaceProfil = str_replace(",","_",$nomReplaceProfil);
+
+														echo '<a class="list-group-item list-group-item-action" id="list-'.$nomReplaceProfil.'-list" data-toggle="list" href="#list-'.$nomReplaceProfil.'" role="tab" aria-controls="'.$nomReplaceProfil.'">'.$donnees['nomProfil'].'';
+															$compteur = mysqli_query($bdd,'SELECT COUNT(idChatMsg)-SUM(lu) as Nbr FROM `chat_msg` WHERE idProfil_recepteur = '.$idPseudo.' AND idProfil_emetteur = '.$donnees['idProfil'].';');
+															$cpt = mysqli_fetch_array($compteur, MYSQLI_ASSOC);
+															
+															if($cpt['Nbr'] != 0){
+																echo '   <span class="badge badge-pill badge-success">'.$cpt['Nbr'].'</span>';
+															}
 														echo '</a>';
 													}
 												}
@@ -138,6 +169,12 @@
 								</div>
 							</div>
 						</div>
+
+
+
+
+
+
 						
 						<div class="col-8">
 
@@ -147,37 +184,48 @@
 											
 									<?php if($recherche_on == 1){ ?>
 
-											<div class="tab-pane fade" id="list-<?php echo $recherche_membre; ?>" role="tabpanel" aria-labelledby="list-<?php echo $recherche_membre; ?>-list" style="padding-bottom: 40px;">
+										<div class="tab-pane fade" id="list-<?php echo $nomReplaceRecherche; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplaceRecherche; ?>-list" style="padding-bottom: 40px;">
 
-												<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 80px;">
-													<h2 class="text-center">Nouvelle discussion avec <?php echo $recherche_membre; ?></h2>
-												</div>
-
-												<div style="position: absolute; bottom: 0; width: 90%;;">
-													<form action="tchat.php" method="POST">
-														<div class="input-group mb-3">
-															<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message-new">
-															<input type="hidden" name="recepteur" value="<?php echo $recherche_membre; ?>">
-															<div class="input-group-append">
-																<input class="btn btn-primary" type="submit" value="Envoyez !">
-															</div>
-															<input type="hidden" name="id-new-message" value="<?php echo $requete_ok['idProfil']; ?>">
-														</div>
-													</form>
-												</div>
-
+											<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 80px;">
+												<h2 class="text-center">Nouvelle discussion avec <?php echo $recherche_membre; ?></h2>
 											</div>
+
+											<div style="position: absolute; bottom: 0; width: 90%;;">
+												<form action="tchat.php" method="POST">
+													<div class="input-group mb-3">
+														<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message-new">
+														<input type="hidden" name="recepteur" value="<?php echo $recherche_membre; ?>">
+														<div class="input-group-append">
+															<input class="btn btn-primary" type="submit" value="Envoyez !">
+														</div>
+														<input type="hidden" name="id-new-message" value="<?php echo $requete_ok['idProfil']; ?>">
+													</div>
+												</form>
+											</div>
+
+										</div>
 
 									<?php	} ?>
 
 									<?php 
-										$listtchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil, idProfil_recepteur FROM profil, chat_msg WHERE profil.idProfil = chat_msg.idProfil_recepteur');
-												
+										$listtchat = mysqli_query($bdd,'SELECT DISTINCT idProfil, nomProfil FROM profil, chat_msg WHERE (profil.idProfil = chat_msg.idProfil_recepteur OR profil.idProfil = chat_msg.idProfil_emetteur) AND (31 = chat_msg.idProfil_recepteur OR 31 = chat_msg.idProfil_emetteur) AND 31 <> profil.idProfil ORDER BY chat_msg.idChatMsg DESC;');
+										
 										foreach($listtchat as $tchat_donnees){
-										$tchat_do = $tchat_donnees['idProfil_recepteur'];
-									?>
+											$nomReplace = str_replace(" ","_",$tchat_donnees['nomProfil']);
+											$nomReplace = str_replace(".","_",$nomReplace);
+											$nomReplace = str_replace("°","_",$nomReplace);
+											$nomReplace = str_replace("?","_",$nomReplace);
+											$nomReplace = str_replace("'","_",$nomReplace);
+											$nomReplace = str_replace("\"","_",$nomReplace);
+											$nomReplace = str_replace("@","_",$nomReplace);
+											$nomReplace = str_replace("!","_",$nomReplace);
+											$nomReplace = str_replace("&","_",$nomReplace);
+											$nomReplace = str_replace("#","_",$nomReplace);
+											$nomReplace = str_replace(",","_",$nomReplace);
+											$tchat_do = $tchat_donnees['idProfil'];
+										?>
 
-										<div class="tab-pane fade" id="list-<?php echo $tchat_donnees['nomProfil']; ?>" role="tabpanel" aria-labelledby="list-<?php echo $tchat_donnees['nomProfil']; ?>-list" style="padding-bottom: 40px;">
+										<div class="tab-pane fade" id="list-<?php echo $nomReplace; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplace; ?>-list" style="padding-bottom: 40px;">
 											
 											<?php 
 											$messages = mysqli_query($bdd,'SELECT DATE_FORMAT(timestampMsg, "%d/%m/%y > %Hh%i") as dateMsg, idProfil_recepteur, idProfil_emetteur, contenu FROM chat_msg WHERE ('.$idPseudo.' = chat_msg.idProfil_emetteur AND '.$tchat_do.' = chat_msg.idProfil_recepteur) OR ('.$tchat_do.' = chat_msg.idProfil_emetteur AND '.$idPseudo.' = chat_msg.idProfil_recepteur)');
@@ -242,9 +290,14 @@
 
 						</div>
 
+
+
+
 					</div>
 
 				</div>
+
+
 
 			</div>
 
