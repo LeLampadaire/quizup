@@ -43,6 +43,8 @@
 	}
 ?>
 
+<?php echo 'test'; ?>
+
 <body class="bg-secondary">
 	<div>
 		
