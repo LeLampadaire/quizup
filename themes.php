@@ -86,6 +86,8 @@
     </section>
 
     <!-- Footer -->
-    <?php require_once('footer.php'); ?>
+    <?php require_once('footer.php'); 
+          mysqli_close($bdd);
+    ?>
 </body>
 </html>

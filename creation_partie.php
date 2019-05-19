@@ -68,7 +68,7 @@
 			mysqli_query($bdd,'INSERT INTO `integrer` (`idPartie`, `idQuestion`, `numero`, `ordreReponses`) VALUES ('.$idpartie.','.$numero.','.$key.','.$ordre.');');
 		}
 		
-	 
+		mysqli_close($bdd);
 		header('Location: partie.php');
 	}
 ?>

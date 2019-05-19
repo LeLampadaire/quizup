@@ -14,7 +14,7 @@
   		$email = $_POST['email'];
   		$ret = mysqli_query($bdd, 'SELECT usersession.idProfil, usersession.lastActivity, usersession.joursConsecutifs, profil.nomProfil FROM usersession, profil WHERE usersession.idProfil = profil.idProfil AND (email LIKE ("'.utf8_decode($email).'") OR profil.nomProfil LIKE("'.utf8_decode($email).'")) AND password LIKE ("'.$mdp.'");');
   		$ret = mysqli_fetch_array($ret, MYSQLI_ASSOC);
-  		
+  		mysqli_close($bdd);
   		if($ret == NULL)
   		{
             $error = 1;
