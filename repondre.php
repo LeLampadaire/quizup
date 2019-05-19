@@ -34,6 +34,7 @@
 	$compteur = mysqli_fetch_array($compteur, MYSQLI_ASSOC);
 	$compteur = $compteur['compteur'];
 	//Vérification du nombre de question restante
+	mysqli_close($bdd);
 	if($compteur == 7)
 	{
 		header('Location: resultat.php');

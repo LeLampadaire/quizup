@@ -121,7 +121,7 @@
 				
 				//Insertion des données dans la table usersession
 				$test  = mysqli_query($bdd, 'INSERT INTO `usersession` (`email`, `password`, `lastActivity`, `joursConsecutifs`, `idProfil`) VALUES ("'.utf8_decode ($_POST['email']).'", "'.md5($_POST['mdp']).'","'.$recup_date.'" , 0, '.$recup_id.');');
-				
+				mysqli_close($bdd);
 				header('Location: connexion.php');
 			}
 		}
