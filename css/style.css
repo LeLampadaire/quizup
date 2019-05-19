@@ -1,0 +1,43 @@
+/*PAGE CSS DU QUIZUP*/
+/*background-color: #480192;*/
+
+
+
+/*FOOTER*/
+footer
+{
+	display: block;
+	bottom: 0;
+	margin-bottom: 0px;
+	margin-top: 50px;
+	padding-top: 1px;
+	width: 100%;
+}
+
+footer, footer a
+{
+	color: white;
+}
+
+footer a
+{
+	padding-top: 10px;
+}
+
+footer a:hover
+{
+	color: lightgrey;
+	text-decoration: none;
+}
+
+section.principale
+{
+	min-height: 500px !important;
+}
+
+/*CSS DES PARTIES*/
+.pointer
+{
+	cursor: pointer;
+}
+
