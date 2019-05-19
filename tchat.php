@@ -18,7 +18,7 @@
 	}
 
 	if(isset($_POST['text-message-new']) && !empty($_POST['text-message-new'])){
-		$message = $_POST['text-message-new'];
+		$message = htmlspecialchars($_POST['text-message-new']);
 		$recepteur = $_POST['id-new-message'];
 		$resultat = mysqli_query($bdd,'INSERT INTO chat_msg(idChatMsg,timestampMsg,contenu,lu,idProfil_recepteur,idProfil_emetteur) VALUES(NULL, CURRENT_TIMESTAMP(), "'.$message.'", 0, '.$recepteur.', '.$idPseudo.');');
 	}
@@ -247,7 +247,7 @@
 																<small><?php echo $donnees['dateMsg']; ?></small>
 															</div>
 															<div class="toast-body">
-																	<?php echo utf8_encode($donnees['contenu']); ?>
+																	<?php echo htmlspecialchars(utf8_encode($donnees['contenu'])); ?>
 															</div>
 														</div>
 													<?php }else{ ?>
@@ -258,7 +258,7 @@
 																<small><?php echo $donnees['dateMsg']; ?></small>
 															</div>
 															<div class="toast-body">
-																	<?php echo utf8_encode($donnees['contenu']); ?>
+																	<?php echo htmlspecialchars(utf8_encode($donnees['contenu'])); ?>
 															</div>
 														</div>
 													<?php } 
