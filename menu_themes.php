@@ -36,11 +36,14 @@
               if($ancien_themes['ThemeidProfil'] <> $_SESSION['idprofil']){
                 echo '<a href="creation_partie.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Play".'</button></a>';
                 echo '<a href="suivre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Suivre".'</button></a><br><br>';
+                echo '<a href="titre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Les titres".'</button></a>';
               }else{
                 echo '<a href="creation_partie.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Play".'</button></a>';
                 echo '<a href="suivre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Suivre".'</button></a>';
+
+                echo '<a href="titre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Les titres".'</button></a>';
+
                 echo '<a href="mise_a_jour_Themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Modifier".'</button></a>';
-                
                 echo '<a href="supprimer_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Supprimer ce thème".'</button></a><br><br>';
               }
 

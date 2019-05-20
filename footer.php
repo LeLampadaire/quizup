@@ -19,10 +19,10 @@
           if(empty($_SESSION)){
           ?>
             <p>
-            <a href="connexion.php">Connexion</a>
+            <a href="connexion.php">Se connecter</a>
             </p>
             <p>
-              <a href="inscription.php">Inscription</a>
+              <a href="inscription.php">S'inscrire</a>
             </p>
           <?php
           }
