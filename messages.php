@@ -5,12 +5,32 @@
 	$Pseudo = $_SESSION['nomprofil'];
     $idPseudo = $_SESSION['idprofil'];
 
+    $modification = 0;
+
     // A CHANGER 
     $idTheme = 15;
     
     if(!empty($_POST['new-message'])){
         $message = $_POST['new-message'];
-        $test = mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message.'", NULL, '.$idTheme.', '.$idPseudo.');');
+        mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message.'", NULL, '.$idTheme.', '.$idPseudo.');');
+    }
+
+    if(!empty($_POST['modifier'])){
+        $idMessage_modif = $_POST['modifier'];
+        var_dump($idMessage_modif);
+        $modification = 1;
+    }
+
+    if(!empty($_POST['modification-text'])){
+        $modification_text = $_POST['modification-text'];
+        $id_modification_text = $_POST['id-modification-text'];
+        $test = mysqli_query($bdd, 'UPDATE message SET contenuMessage = "'.$modification_text.'" WHERE  idMessage = '.$id_modification_text.';');
+    }
+
+    if(!empty($_POST['supprimer'])){
+        $idMessage = (int)$_POST['supprimer'];
+        mysqli_query($bdd, 'DELETE FROM message WHERE idMessage = '.$idMessage.';');
+        
     }
 
 ?>
@@ -30,7 +50,7 @@
 
     <section class="container text-center mt-5 text-white principale">
 
-            <div class="card text-center bg-dark" style="height: 1000px; color: black;">
+            <div class="card text-center bg-dark" style="height: auto; color: black;">
 
                 <!-- ENVOYE D'UN NOUVEAU COMMENTAIRE -->
                 <form action="" method="POST">
@@ -56,15 +76,36 @@
                                 <small style="padding-left: 10px;"><?php echo $recup['dateMsg']; ?></small>
                                 
                                 <div style="padding-left: 10px;">
-                                    <button type="button" class="btn btn-primary btn-sm"><img src="images/repondre.png" alt="<-" width="15px"></button>
+                                    
                                     <?php $testdereponse = mysqli_query($bdd,'SELECT idMessage FROM message WHERE idMessage_1 = '.$recup['idMessage'].';');
-                                    $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC); ?>
-                                    <?php if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/modifier.png" alt="M" width="15px"></button>'; } ?>
-                                    <?php if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ echo '<button type="button" class="btn btn-danger btn-sm"><img src="images/supprimer.png" alt="x" width="15px"></button>'; } ?>
+                                    $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC);
+
+                                    echo '<form action="" method="POST">';
+                                        echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/repondre.png" alt="<-" width="15px"></button>';
+                                    if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ 
+                                        echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$recup['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
+                                        echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$recup['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
+
+                                    } 
+                                    echo '</form>'; ?>
                                 </div>
                             </div>
                             <div class="toast-body">
-                                <?php echo $recup['contenuMessage']; ?>
+                                <?php 
+                                if($modification == 0){
+                                    echo $recup['contenuMessage']; 
+                                }else{
+                                    if($idMessage_modif == $recup['idMessage']){
+                                        echo '<form action="" method="POST">';
+                                            echo '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Votre message" name="modification-text" value="'.$recup['contenuMessage'].'" aria-describedby="btn-modifiez">';
+                                            echo '<input type="hidden" name="id-modification-text" value="'.$recup['idMessage'].'"><br>';
+                                            echo '<div class="input-group-append"><input class="btn btn-primary btn-sm" type="submit" id="btn-modifiez" value="Modifiez !"></div></div>';
+                                        echo '</form>';
+                                    }else{
+                                        echo $recup['contenuMessage'];
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -86,17 +127,36 @@
                                     <small style="padding-left: 10px;"><?php echo $reponse['dateMsg']; ?></small>
                                     
                                     <div style="padding-left: 10px;">
-                                    <?php $testdereponse = mysqli_query($bdd,'SELECT COUNT(idMessage) as cpt FROM message WHERE idMessage_1 = '.$idTempo.';');
-                                        $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC); ?>
-                                        <?php if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/modifier.png" alt="M" width="15px"></button>'; } ?>
-                                        <?php if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ echo '<button type="button" class="btn btn-danger btn-sm"><img src="images/supprimer.png" alt="x" width="15px"></button>'; } ?>
+                                        <?php $testdereponse = mysqli_query($bdd,'SELECT COUNT(idMessage) as cpt FROM message WHERE idMessage_1 = '.$idTempo.';');
+                                        $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC);
+
+                                        if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ 
+                                            echo '<form action="" method="POST">';
+                                                echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$reponse['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
+                                                echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$reponse['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
+                                            echo '</form>';  
+                                        } ?>
                                     </div>
                                 </div>
                                     
                                 <div class="toast-header"><small><?php echo "A répondu à ".$nomTempo." :"; ?></small></div>
                                 
                                 <div class="toast-body">
-                                    <?php echo $reponse['contenuMessage']; ?>
+                                    <?php 
+                                    if($modification == 0){
+                                        echo $reponse['contenuMessage']; 
+                                    }else{
+                                        if($idMessage_modif == $reponse['idMessage']){
+                                            echo '<form action="" method="POST">';
+                                                echo '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Votre message" name="modification-text" value="'.$reponse['contenuMessage'].'" aria-describedby="btn-modifiez">';
+                                                echo '<input type="hidden" name="id-modification-text" value="'.$reponse['idMessage'].'"><br>';
+                                                echo '<div class="input-group-append"><input class="btn btn-primary btn-sm" type="submit" id="btn-modifiez" value="Modifiez !"></div></div>';
+                                            echo '</form>';
+                                        }else{
+                                            echo $reponse['contenuMessage'];
+                                        }
+                                    }
+                                    ?>
                                 </div>
 
                             </div>

@@ -74,7 +74,7 @@
 							<div class="row">
 								<div class="col-12">
 
-									<form action="tchat.php" method="POST"> <!-- Nouvelle discussion -->
+									<form action="" method="POST"> <!-- Nouvelle discussion -->
 										<div class="input-group mb-3" style="width: 100%">
 											<input list="membres-list" id="membres-list-choice" name="membres-list-choice">
 											<datalist id="membres-list">
@@ -199,7 +199,7 @@
 											</div>
 
 											<div style="position: absolute; bottom: 0; width: 90%;">
-												<form action="tchat.php" method="POST">
+												<form action="" method="POST">
 													<div class="input-group mb-3">
 														<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message-new">
 														<input type="hidden" name="recepteur" value="<?php echo $recherche_membre; ?>">
@@ -285,7 +285,7 @@
 											
 											if($test == 0){ ?>
 												<div style="position: absolute; bottom: 0; width: 90%;;">
-													<form action="tchat.php" method="POST">
+													<form action="" method="POST">
 														<div class="input-group mb-3">
 															<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message">
 															<input type="hidden" name="recepteur" value="<?php echo $tchat_donnees['idProfil']; ?>">
