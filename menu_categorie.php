@@ -8,7 +8,7 @@
     $ancien_categorie = mysqli_query($bdd, 'SELECT categorie.libelleCategorie as ancienLibelle FROM categorie WHERE '.$_GET['idcategorie'].' = categorie.idCategorie;');
     $ancien_categorie = mysqli_fetch_array($ancien_categorie, MYSQLI_ASSOC);
 
-    $theme_class = "active";
+    $categorie_class = "active";
     ?>
 
 <head>
@@ -28,13 +28,18 @@
         </div>
         <div class="card-body">
           <?php
+            if(isset($_GET['erreur']) && $_GET['erreur'] == 1){
+                echo '<div class="alert alert-danger" role="alert">';
+                echo 'Cette catégorie ne peut pas être supprimée car elle possède au-moins un thème !';
+                echo '</div>';
+                }
             if(empty($_SESSION)){
               echo '<div class="alert alert-danger" role="alert">
                       Vous devez être connecté pour pouvoir voir les catégorie !
                     </div>';
             }else{
                 echo '<a href="mise_a_jour_categorie.php?idcategorie='.$_GET['idcategorie'].'"><button  class="btn btn-outline-light">'."Modifier".'</button></a>';
-                echo '<a href="supprimer_categorie.php?idtheme='.$_GET['idcategorie'].'"><button  class="btn btn-outline-light">'."Supprimer cette catégorie".'</button></a><br><br>';
+                echo '<a href="supprimer_categorie.php?idcategorie='.$_GET['idcategorie'].'"><button  class="btn btn-outline-light">'."Supprimer cette catégorie".'</button></a><br><br>';
             }
             ?>
         </div>
