@@ -8,6 +8,9 @@
     $mes_themes = mysqli_query($bdd, 'SELECT theme.idTheme, theme.libelleTheme FROM theme WHERE idProfil = '.$_SESSION['idprofil'].' ORDER BY libelleTheme ASC;');
 
     $theme_class = "active";
+    if($_SESSION['idprofil'] == NULL){
+      header('Location: 404.php');
+    }
     ?>
 
 <head>
