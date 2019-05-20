@@ -202,27 +202,19 @@
                             </div>
                         </div>
 
-                    <?php } ?>
+                    <?php }
 
-                    
-                    <?php 
-
-                        if($repondre != 0){
-                            if($idMessage_repondre == $recup['idMessage']){
-                                echo '<div style="position: relative;left: 40px; width: 300px;"><form action="" method="POST">';
-                                    echo '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Votre message" name="repondre-text" aria-describedby="btn-repondre">';
-                                    echo '<input type="hidden" name="id-repondre-text" value="'.$recup['idMessage'].'"><br>';
-                                    echo '<div class="input-group-append"><input class="btn btn-warning btn-sm" type="submit" id="btn-repondre" value="Répondre !"></div></div>';
-                                echo '</form></div>';
-                            }
+                    if($repondre != 0){
+                        if($idMessage_repondre == $recup['idMessage']){
+                            echo '<div style="position: relative;left: 40px; width: 300px;"><form action="" method="POST">';
+                                echo '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Votre message" name="repondre-text" aria-describedby="btn-repondre">';
+                                echo '<input type="hidden" name="id-repondre-text" value="'.$recup['idMessage'].'"><br>';
+                                echo '<div class="input-group-append"><input class="btn btn-warning btn-sm" type="submit" id="btn-repondre" value="Répondre !"></div></div>';
+                            echo '</form></div>';
                         }
+                    }
 
-                    ?>
-
-
-
-
-                <?php } ?>
+                } ?>
 
             </div>
 
