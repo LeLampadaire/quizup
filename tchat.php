@@ -7,9 +7,9 @@
 
 	if($idPseudo == NULL){
 		header('Location: 404.php');
-	}else{
-		$recherche_on = 0;
 	}
+	
+	$recherche_on = 0;
 
 	if(isset($_POST['text-message']) && !empty($_POST['text-message'])){
 		$message = $_POST['text-message'];

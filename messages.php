@@ -6,18 +6,34 @@
     $idPseudo = $_SESSION['idprofil'];
 
     $modification = 0;
+    $repondre = 0;
 
     // A CHANGER 
-    $idTheme = 15;
+    $idTheme = 15; // $_GET['idtheme']
     
     if(!empty($_POST['new-message'])){
         $message = $_POST['new-message'];
         mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message.'", NULL, '.$idTheme.', '.$idPseudo.');');
     }
 
+    if(!empty($_POST['repondre'])){
+        $idMessage_repondre = $_POST['repondre'];
+        $repondre = 1;
+    }
+
+    if(!empty($_POST['repondre-text'])){
+        $message_reponse = $_POST['repondre-text'];
+        $id_message_reponse = $_POST['id-repondre-text'];
+        mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message_reponse.'", '.$id_message_reponse.', '.$idTheme.', '.$idPseudo.');');
+    }
+
+    if(!empty($_POST['liker'])){
+        $idMessageLike = (int)$_POST['liker'];
+        mysqli_query($bdd, 'INSERT INTO liker(idProfil, idMessage) VALUES('.$idPseudo.', '.$idMessageLike.');');
+    }
+
     if(!empty($_POST['modifier'])){
         $idMessage_modif = $_POST['modifier'];
-        var_dump($idMessage_modif);
         $modification = 1;
     }
 
@@ -30,7 +46,6 @@
     if(!empty($_POST['supprimer'])){
         $idMessage = (int)$_POST['supprimer'];
         mysqli_query($bdd, 'DELETE FROM message WHERE idMessage = '.$idMessage.';');
-        
     }
 
 ?>
@@ -62,7 +77,7 @@
                     </div>
                 </form>
 
-                <!-- AFFICHAGE DES COMMENTAIRES -->
+                <!-- AFFICHAGE DES COMMENTAIRES + OUTILS-->
                 <?php $recupmessage = mysqli_query($bdd, 'SELECT profil.idProfil, idMessage, nomProfil, contenuMessage, DATE_FORMAT(timestampMessage, "%d/%m/%y > %Hh%i") as dateMsg, photoProfil FROM profil INNER JOIN message ON(profil.idProfil = message.idProfil) WHERE idMessage_1 IS NULL AND idTheme = '.$idTheme.' ORDER BY timestampMessage DESC;');
 
                 foreach($recupmessage as $recup){ ?>
@@ -79,9 +94,19 @@
                                     
                                     <?php $testdereponse = mysqli_query($bdd,'SELECT idMessage FROM message WHERE idMessage_1 = '.$recup['idMessage'].';');
                                     $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC);
-
+                                    
+                                    $nbr_like = mysqli_query($bdd, 'SELECT COUNT(idMessage) as nbr FROM liker WHERE idMessage = '.$recup['idMessage'].';');
+                                    $nbr_like = mysqli_fetch_array($nbr_like, MYSQLI_ASSOC);
+                                    
                                     echo '<form action="" method="POST">';
-                                        echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/repondre.png" alt="<-" width="15px"></button>';
+                                        echo '<button type="submit" class="btn btn-primary btn-sm" name="repondre" value="'.$recup['idMessage'].'"><img src="images/repondre.png" alt="<-" width="15px"></button>';
+                                        
+                                        if($recup['idProfil'] != $idPseudo){ 
+                                            echo '<button type="submit" class="btn btn-success btn-sm" name="liker" value="'.$recup['idMessage'].'">'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                        }else{
+                                            echo '<button type="button" class="btn btn-success btn-sm" disabled>'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                        }
+
                                     if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ 
                                         echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$recup['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
                                         echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$recup['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
@@ -129,9 +154,19 @@
                                     <div style="padding-left: 10px;">
                                         <?php $testdereponse = mysqli_query($bdd,'SELECT COUNT(idMessage) as cpt FROM message WHERE idMessage_1 = '.$idTempo.';');
                                         $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC);
+                                    
+                                        $nbr_like = mysqli_query($bdd, 'SELECT COUNT(idMessage) as nbr FROM liker WHERE idMessage = '.$reponse['idMessage'].';');
+                                        $nbr_like = mysqli_fetch_array($nbr_like, MYSQLI_ASSOC);
+                                        
+                                        echo '<form action="" method="POST">';
+
+                                            if($reponse['idProfil'] != $idPseudo){ 
+                                                echo '<button type="submit" class="btn btn-success btn-sm" name="liker" value="'.$reponse['idMessage'].'">'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                            }else{
+                                                echo '<button type="button" class="btn btn-success btn-sm" disabled>'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                            }
 
                                         if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ 
-                                            echo '<form action="" method="POST">';
                                                 echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$reponse['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
                                                 echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$reponse['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
                                             echo '</form>';  
@@ -163,6 +198,24 @@
                         </div>
 
                     <?php } ?>
+
+                    
+                    <?php 
+
+                        if($repondre != 0){
+                            if($idMessage_repondre == $recup['idMessage']){
+                                echo '<div style="position: relative;left: 40px; width: 300px;"><form action="" method="POST">';
+                                    echo '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Votre message" name="repondre-text" aria-describedby="btn-repondre">';
+                                    echo '<input type="hidden" name="id-repondre-text" value="'.$recup['idMessage'].'"><br>';
+                                    echo '<div class="input-group-append"><input class="btn btn-warning btn-sm" type="submit" id="btn-repondre" value="Répondre !"></div></div>';
+                                echo '</form></div>';
+                            }
+                        }
+
+                    ?>
+
+
+
 
                 <?php } ?>
 
