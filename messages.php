@@ -97,23 +97,26 @@
                                     
                                     $nbr_like = mysqli_query($bdd, 'SELECT COUNT(idMessage) as nbr FROM liker WHERE idMessage = '.$recup['idMessage'].';');
                                     $nbr_like = mysqli_fetch_array($nbr_like, MYSQLI_ASSOC);
+
+                                    $verif_like = mysqli_query($bdd, 'SELECT idMessage FROM liker WHERE idProfil = '.$idPseudo.' AND idMessage = '.$recup['idMessage'].';');
+                                    $verif_like = mysqli_fetch_array($verif_like, MYSQLI_ASSOC);
                                     
                                     echo '<form action="" method="POST">';
                                         echo '<button type="submit" class="btn btn-primary btn-sm" name="repondre" value="'.$recup['idMessage'].'"><img src="images/repondre.png" alt="<-" width="15px"></button>';
                                         
-                                        if($recup['idProfil'] != $idPseudo){ 
-                                            echo '<button type="submit" class="btn btn-success btn-sm" name="liker" value="'.$recup['idMessage'].'">'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                        if($recup['idProfil'] == $idPseudo OR $verif_like['idMessage'] != NULL){ 
+                                            echo '<button type="button" class="btn btn-success btn-sm" disabled>'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>';
                                         }else{
-                                            echo '<button type="button" class="btn btn-success btn-sm" disabled>'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                            echo '<button type="submit" class="btn btn-success btn-sm" name="liker" value="'.$recup['idMessage'].'">'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
                                         }
 
-                                    if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ 
-                                        echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$recup['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
-                                        echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$recup['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
-
-                                    } 
+                                        if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ 
+                                            echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$recup['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
+                                            echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$recup['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
+                                        } 
                                     echo '</form>'; ?>
                                 </div>
+                            
                             </div>
                             <div class="toast-body">
                                 <?php 
@@ -157,20 +160,22 @@
                                     
                                         $nbr_like = mysqli_query($bdd, 'SELECT COUNT(idMessage) as nbr FROM liker WHERE idMessage = '.$reponse['idMessage'].';');
                                         $nbr_like = mysqli_fetch_array($nbr_like, MYSQLI_ASSOC);
-                                        
-                                        echo '<form action="" method="POST">';
 
-                                            if($reponse['idProfil'] != $idPseudo){ 
-                                                echo '<button type="submit" class="btn btn-success btn-sm" name="liker" value="'.$reponse['idMessage'].'">'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                        $verif_like_rep = mysqli_query($bdd, 'SELECT idMessage FROM liker WHERE idProfil = '.$idPseudo.' AND idMessage = '.$reponse['idMessage'].';');
+                                        $verif_like_rep = mysqli_fetch_array($verif_like_rep, MYSQLI_ASSOC);
+                                            
+                                        echo '<form action="" method="POST">';
+                                            if($reponse['idProfil'] == $idPseudo OR $verif_like_rep['idMessage'] != NULL){ 
+                                                echo '<button type="button" class="btn btn-success btn-sm" disabled>'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>';
                                             }else{
-                                                echo '<button type="button" class="btn btn-success btn-sm" disabled>'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
+                                                echo '<button type="submit" class="btn btn-success btn-sm" name="liker" value="'.$reponse['idMessage'].'">'.$nbr_like['nbr'].'<img src="images/like.png" alt="like" width="15px"></button>'; 
                                             }
 
-                                        if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ 
-                                                echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$reponse['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
-                                                echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$reponse['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
-                                            echo '</form>';  
-                                        } ?>
+                                            if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ 
+                                                    echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$reponse['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
+                                                    echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$reponse['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
+                                            } 
+                                        echo '</form>'; ?>
                                     </div>
                                 </div>
                                     
