@@ -6,6 +6,7 @@
     $idPseudo = $_SESSION['idprofil'];
 
     $modification = 0;
+    $repondre = 0;
 
     // A CHANGER 
     $idTheme = 15;
@@ -15,9 +16,19 @@
         mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message.'", NULL, '.$idTheme.', '.$idPseudo.');');
     }
 
+    if(!empty($_POST['repondre'])){
+        $idMessage_repondre = $_POST['repondre'];
+        $repondre = 1;
+    }
+
+    if(!empty($_POST['repondre-text'])){
+        $message_reponse = $_POST['repondre-text'];
+        $id_message_reponse = $_POST['id-repondre-text'];
+        mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message_reponse.'", '.$id_message_reponse.', '.$idTheme.', '.$idPseudo.');');
+    }
+
     if(!empty($_POST['modifier'])){
         $idMessage_modif = $_POST['modifier'];
-        var_dump($idMessage_modif);
         $modification = 1;
     }
 
@@ -30,7 +41,6 @@
     if(!empty($_POST['supprimer'])){
         $idMessage = (int)$_POST['supprimer'];
         mysqli_query($bdd, 'DELETE FROM message WHERE idMessage = '.$idMessage.';');
-        
     }
 
 ?>
@@ -81,7 +91,7 @@
                                     $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC);
 
                                     echo '<form action="" method="POST">';
-                                        echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/repondre.png" alt="<-" width="15px"></button>';
+                                        echo '<button type="submit" class="btn btn-primary btn-sm" name="repondre" value="'.$recup['idMessage'].'"><img src="images/repondre.png" alt="<-" width="15px"></button>';
                                     if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ 
                                         echo '<button type="submit" class="btn btn-primary btn-sm" name="modifier" value="'.$recup['idMessage'].'"><img src="images/modifier.png" alt="M" width="15px"></button>';
                                         echo '<button type="submit" class="btn btn-danger btn-sm" name="supprimer" value="'.$recup['idMessage'].'"><img src="images/supprimer.png" alt="x" width="15px"></button>';
@@ -163,6 +173,24 @@
                         </div>
 
                     <?php } ?>
+
+                    
+                    <?php 
+
+                        if($repondre != 0){
+                            if($idMessage_repondre == $recup['idMessage']){
+                                echo '<div style="position: relative;left: 40px; width: 300px;"><form action="" method="POST">';
+                                    echo '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Votre message" name="repondre-text" aria-describedby="btn-repondre">';
+                                    echo '<input type="hidden" name="id-repondre-text" value="'.$recup['idMessage'].'"><br>';
+                                    echo '<div class="input-group-append"><input class="btn btn-warning btn-sm" type="submit" id="btn-repondre" value="Répondre !"></div></div>';
+                                echo '</form></div>';
+                            }
+                        }
+
+                    ?>
+
+
+
 
                 <?php } ?>
 
