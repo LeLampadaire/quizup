@@ -4,7 +4,15 @@
 
 	$Pseudo = $_SESSION['nomprofil'];
     $idPseudo = $_SESSION['idprofil'];
+
+    // A CHANGER 
+    $idTheme = 15;
     
+    if(!empty($_POST['new-message'])){
+        $message = $_POST['new-message'];
+        $test = mysqli_query($bdd, 'INSERT INTO message(idMessage, timestampMessage, contenuMessage, idMessage_1, idTheme, idProfil) VALUES (NULL,CURRENT_TIMESTAMP(),"'.$message.'", NULL, '.$idTheme.', '.$idPseudo.');');
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,57 +33,76 @@
             <div class="card text-center bg-dark" style="height: 1000px; color: black;">
 
                 <!-- ENVOYE D'UN NOUVEAU COMMENTAIRE -->
-
-
+                <form action="" method="POST">
+                    <div class="input-group mb-12">
+                        <input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="new-message">
+                        <div class="input-group-append">
+                            <input class="btn btn-primary" type="submit" value="Envoyez !">
+                        </div>
+                    </div>
+                </form>
 
                 <!-- AFFICHAGE DES COMMENTAIRES -->
-                <?php $recupmessage = mysqli_query($bdd, 'SELECT profil.idProfil, nomProfil, photoProfil, contenuMessage, DATE_FORMAT(timestampMessage, "%d/%m/%y > %Hh%i") as dateMsg, idMessage_1 FROM message INNER JOIN profil ON(message.idProfil = profil.idProfil) WHERE idTheme = 4 ORDER BY idMessage ASC;');
-                
-                foreach($recupmessage as $donnees){ 
+                <?php $recupmessage = mysqli_query($bdd, 'SELECT profil.idProfil, idMessage, nomProfil, contenuMessage, DATE_FORMAT(timestampMessage, "%d/%m/%y > %Hh%i") as dateMsg, photoProfil FROM profil INNER JOIN message ON(profil.idProfil = message.idProfil) WHERE idMessage_1 IS NULL AND idTheme = '.$idTheme.' ORDER BY timestampMessage DESC;');
+
+                foreach($recupmessage as $recup){ ?>
+            
+                    <br>
+                    <div aria-live="polite" aria-atomic="true" class="d-flex align-items-center" style="position: relative;left: 10px;padding-bottom: 10px;">
+                        <div class="toast" role="alert" aria-live="assertive" data-autohide="false">
+                            <div class="toast-header" >
+                                <img src="<?php echo $recup['photoProfil']; ?>" class="rounded mr-2" alt="Logo" height="20px">
+                                <a href="profil.php?idprofil=<?php echo $recup['idProfil']; ?>" alt="<?php echo $recup['nomProfil']; ?>"><strong class="mr-auto"><?php echo $recup['nomProfil']; ?></strong></a>
+                                <small style="padding-left: 10px;"><?php echo $recup['dateMsg']; ?></small>
+                                
+                                <div style="padding-left: 10px;">
+                                    <button type="button" class="btn btn-primary btn-sm"><img src="images/repondre.png" alt="<-" width="15px"></button>
+                                    <?php $testdereponse = mysqli_query($bdd,'SELECT idMessage FROM message WHERE idMessage_1 = '.$recup['idMessage'].';');
+                                    $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC); ?>
+                                    <?php if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/modifier.png" alt="M" width="15px"></button>'; } ?>
+                                    <?php if($recup['idProfil'] == $idPseudo AND $testdereponse == NULL){ echo '<button type="button" class="btn btn-danger btn-sm"><img src="images/supprimer.png" alt="x" width="15px"></button>'; } ?>
+                                </div>
+                            </div>
+                            <div class="toast-body">
+                                <?php echo $recup['contenuMessage']; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php 
+                    $nomTempo = $recup['nomProfil'];
+                    $idTempo = $recup['idMessage'];
+                    $cpt = 0;
+
+                    $reponsemessage = mysqli_query($bdd, 'SELECT profil.idProfil, idMessage, nomProfil, contenuMessage, DATE_FORMAT(timestampMessage, "%d/%m/%y > %Hh%i") as dateMsg, photoProfil FROM profil INNER JOIN message ON(profil.idProfil = message.idProfil) WHERE idMessage_1 = '.$recup['idMessage'].' AND idTheme = '.$idTheme.' ORDER BY timestampMessage ASC;');
                     
-                    
-                    if($donnees['idMessage_1'] == NULL){ ?>
-                        <br>
-                        <div aria-live="polite" aria-atomic="true" class="d-flex align-items-center" style="position: relative; left: 10px;padding-bottom: 10px;">
-                            <div class="toast" role="alert" aria-live="assertive" data-autohide="false" style="position: relative; z-index: 1;min-height: 80px; min-width: 500px;">
-                                <div class="toast-header">
-                                    <img src="<?php echo $donnees['photoProfil']; ?>" class="rounded mr-2" alt="Logo" height="20px">
-                                    <a href="profil.php?idprofil=<?php echo $donnees['idProfil']; ?>" alt="<?php echo $donnees['nomProfil']; ?>"><strong class="mr-auto"><?php echo $donnees['nomProfil']; ?></strong></a>
-                                    <small><?php echo $donnees['dateMsg']; ?></small>
+                    foreach($reponsemessage as $reponse){ 
+                        $cpt++; ?>
+                        <div aria-live="polite" aria-atomic="true" class="d-flex align-items-center" style="position: relative;left: 40px;padding-bottom: 10px;">
+                            <div class="toast" role="alert" aria-live="assertive" data-autohide="false">
+                                <div class="toast-header" >
+                                    <img src="<?php echo $reponse['photoProfil']; ?>" class="rounded mr-2" alt="Logo" height="20px">
+                                    <a href="profil.php?idprofil=<?php echo $reponse['idProfil']; ?>" alt="<?php echo $reponse['nomProfil']; ?>"><strong class="mr-auto"><?php echo $reponse['nomProfil']; ?></strong></a>
+                                    <small style="padding-left: 10px;"><?php echo $reponse['dateMsg']; ?></small>
                                     
-                                    <div class="btn-group">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                        <div class="dropdown-menu" style="position: absolute; z-index: 100;">
-                                            <a class="dropdown-item" href="#">Commentez</a>
-                                            <a class="dropdown-item" href="#">Supprimez</a>
-                                        </div>
+                                    <div style="padding-left: 10px;">
+                                    <?php $testdereponse = mysqli_query($bdd,'SELECT COUNT(idMessage) as cpt FROM message WHERE idMessage_1 = '.$idTempo.';');
+                                        $testdereponse = mysqli_fetch_array($testdereponse, MYSQLI_ASSOC); ?>
+                                        <?php if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ echo '<button type="button" class="btn btn-primary btn-sm"><img src="images/modifier.png" alt="M" width="15px"></button>'; } ?>
+                                        <?php if($reponse['idProfil'] == $idPseudo AND (int)$testdereponse['cpt'] == $cpt){ echo '<button type="button" class="btn btn-danger btn-sm"><img src="images/supprimer.png" alt="x" width="15px"></button>'; } ?>
                                     </div>
                                 </div>
-                                <div class="toast-body">
-                                    <?php echo $donnees['contenuMessage']; ?>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    <?php
-                        $nomTempo = $donnees['nomProfil'];
-                    
-                        }else{ ?>                   
-                        <div aria-live="polite" aria-atomic="true" class="d-flex align-items-center" style="position: relative; left: 40px;padding-bottom: 10px;" style="min-height: 200px; width: 100%;">
-                            <div class="toast" role="alert" aria-live="assertive" data-autohide="false">
-                                <div class="toast-header">
-                                    <img src="<?php echo $donnees['photoProfil']; ?>" class="rounded mr-2" alt="Logo" height="20px">
-                                    <a href="profil.php?idprofil=<?php echo $donnees['idProfil']; ?>" alt="<?php echo $donnees['nomProfil']; ?>"><strong class="mr-auto"><?php echo $donnees['nomProfil']; ?></strong></a>
-                                    <small><?php echo $donnees['dateMsg']; ?></small>
-                                </div>
+                                    
                                 <div class="toast-header"><small><?php echo "A répondu à ".$nomTempo." :"; ?></small></div>
+                                
                                 <div class="toast-body">
-                                    <?php echo $donnees['contenuMessage']; ?>
+                                    <?php echo $reponse['contenuMessage']; ?>
                                 </div>
+
                             </div>
                         </div>
-                    <?php } ?>
 
+                    <?php } ?>
 
                 <?php } ?>
 

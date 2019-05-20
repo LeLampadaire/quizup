@@ -192,13 +192,13 @@
 											
 									<?php if($recherche_on == 1){ ?>
 
-										<div class="tab-pane fade" id="list-<?php echo $nomReplaceRecherche; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplaceRecherche; ?>-list" style="padding-bottom: 40px;">
+										<div class="tab-pane fade" id="list-<?php echo $nomReplaceRecherche; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplaceRecherche; ?>-list" style="padding-bottom: 60px;">
 
 											<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 80px;">
 												<h2 class="text-center">Nouvelle discussion avec <?php echo $recherche_membre; ?></h2>
 											</div>
 
-											<div style="position: absolute; bottom: 0; width: 90%;;">
+											<div style="position: absolute; bottom: 0; width: 90%;">
 												<form action="tchat.php" method="POST">
 													<div class="input-group mb-3">
 														<input type="text" class="form-control" placeholder="Votre message ..." aria-label="Votre message ..." aria-describedby="button-envoyez" name="text-message-new">
@@ -234,7 +234,7 @@
 											$tchat_do = $tchat_donnees['idProfil'];
 										?>
 
-										<div class="tab-pane fade" id="list-<?php echo $nomReplace; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplace; ?>-list" style="padding-bottom: 40px;">
+										<div class="tab-pane fade" id="list-<?php echo $nomReplace; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplace; ?>-list" style="padding-bottom: 60px;">
 											
 											<?php 
 											$messages = mysqli_query($bdd,'SELECT DATE_FORMAT(timestampMsg, "%d/%m/%y > %Hh%i") as dateMsg, idProfil_recepteur, idProfil_emetteur, contenu FROM chat_msg WHERE ('.$idPseudo.' = chat_msg.idProfil_emetteur AND '.$tchat_do.' = chat_msg.idProfil_recepteur) OR ('.$tchat_do.' = chat_msg.idProfil_emetteur AND '.$idPseudo.' = chat_msg.idProfil_recepteur)');
