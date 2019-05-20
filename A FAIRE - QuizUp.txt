@@ -1,14 +1,8 @@
-Profil :
-- Opacity des boutons
-
-Classement :
+﻿Classement :
 - Classement -> Médaille pour les 3 premiers
 
-Tchat :
-- Si la personne t'a bloqué, tu peux pas continuer à le mp
-
 Thème :
-- Commentaire après un thème
+- Ajout partie commentaire après un thème
 - Upload des images dans notre bdd
 
 Vérification :

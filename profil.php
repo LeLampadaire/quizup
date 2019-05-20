@@ -196,6 +196,7 @@
 					{
 						echo '<img class"rounded border border-warning" width="200px" height="200px" alt="Image de profil" src="'.$photo_profil.'">';
 					} ?><br><br>
+					<div style="background-color: rgba(0, 0, 0, 0.7); margin-bottom: -30px; padding: 10px;" class="rounded">
 					<?php if($connected == 1)
 					{
 						/*MODIFIER LE PROFIL*/
@@ -207,7 +208,7 @@
 					} ?>
 				<a href=<?php echo '"historique.php?idprofil='.$idprofil.'"'; ?>><button class="btn btn-outline-light">Historique des parties</button></a>
 
-				<?php echo '<a href="profil_choix_theme.php?idprofil='.$idprofil.'">';?><button class="btn btn-outline-light">Classement personnel</button></a><br>
+				<?php echo '<a href="profil_choix_theme.php?idprofil='.$idprofil.'">';?><button class="btn btn-outline-light">Classement personnel</button></a></div><br>
 				</div>
 			<?php if (($connected != 1 && $prive == 0) || ($connected == 1)) 
 			{?>
