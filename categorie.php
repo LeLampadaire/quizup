@@ -6,6 +6,10 @@
     $categorie = mysqli_query($bdd, 'SELECT categorie.idCategorie, categorie.libelleCategorie FROM categorie ORDER BY libelleCategorie ASC;');
 
     $categorie_class = "active";
+
+    if($_SESSION['idprofil'] == NULL){
+        header('Location: 404.php');
+    }
     ?>
 
 <head>

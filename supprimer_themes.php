@@ -5,16 +5,11 @@
       require_once('baseDeDonnee.php');
       require_once('configuration.php');
 
-      if(isset($_GET) && !empty($_GET)){
-        $ajouterquestion_idTheme = $_GET['idtheme'];
-      }
+      $supprimer_themes = mysqli_query($bdd, 'SELECT COUNT(`idQuestion`) as nbquest FROM question INNER JOIN theme ON (theme.`idTheme` = question.`idTheme`) WHERE theme.`idTheme` = '.$_GET['idtheme'].';');
+      $supprimer_themes = mysqli_fetch_array($supprimer_themes, MYSQLI_ASSOC);
+      $supprimer_themes = $supprimer_themes['nbquest'];
 
-      $supprimer_question = mysqli_query($bdd, 'SELECT COUNT(`idQuestion`) as nbquest FROM question INNER JOIN theme ON (theme.`idTheme` = question.`idTheme`) WHERE theme.`idTheme` = '.$_GET['idtheme'].';');
-      $supprimer_question = mysqli_fetch_array($supprimer_question, MYSQLI_ASSOC);
-      $supprimer_question = $supprimer_question['nbquest'];
-      var_dump($supprimer_question);
-
-      if($supprimer_question != 0){
+      if($supprimer_themes != 0){
         $erreur = 1;
         header('Location: themes.php?erreur='.$erreur.'');
       }else{

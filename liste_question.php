@@ -82,6 +82,7 @@
                         <div class="modal-footer">
                             <?php
                                 echo '<a href="mise_a_jour_Question.php?idtheme='.$_GET['idtheme'].'&idquestion='.$idquestiontemp.'"><button type="button" class="btn btn-secondary">Modifier</button></a>';
+                                echo '<a href="supprimer_question.php?idtheme='.$_GET['idtheme'].'&idquestion='.$idquestiontemp.'"><button type="button" class="btn btn-secondary">Supprimer</button></a>';
                             ?>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         </div>
