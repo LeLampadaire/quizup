@@ -103,7 +103,15 @@
 					</ul>
 					<ul class="navbar-nav ">
 						<form class="form-inline" method="GET" action="recherche.php">
-							<input class="form-control mr-sm-2" type="search" placeholder="Rechercher un profil" aria-label="Search" name="pseudo">
+							<input class="form-control mr-sm-2" list="recherche-nom" placeholder="Rechercher un profil" name="pseudo">
+							<datalist id="recherche-nom">
+								<?php 
+								$recherche = mysqli_query($bdd, 'SELECT nomProfil FROM profil;');
+								foreach($recherche as $recherche_pseudo){
+									echo '<option value="'.$recherche_pseudo['nomProfil'].'">';
+								} ?>
+								
+							</datalist>
 							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
 						</form>
 						<li class="nav-item">
