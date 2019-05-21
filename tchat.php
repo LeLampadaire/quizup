@@ -54,20 +54,13 @@
 
 			<div class="card text-center bg-dark">
 
-
-
 				<div class="card-header">
 					<h2>Tchat</h2>
 				</div>
 
-
-
 				<div class="card-body">
 
 					<div class="row">
-
-
-
 
 						<div class="col-4">
 
@@ -178,12 +171,6 @@
 							</div>
 						</div>
 
-
-
-
-
-
-						
 						<div class="col-8">
 
 							<div class="card bg-secondary">
@@ -234,7 +221,7 @@
 											$tchat_do = $tchat_donnees['idProfil'];
 										?>
 
-										<div class="tab-pane fade" id="list-<?php echo $nomReplace; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplace; ?>-list" style="padding-bottom: 60px;">
+										<div class="tab-pane fade" id="list-<?php echo $nomReplace; ?>" role="tabpanel" aria-labelledby="list-<?php echo $nomReplace; ?>-list" style="padding-bottom: 35px;">
 											
 											<?php 
 											$messages = mysqli_query($bdd,'SELECT DATE_FORMAT(timestampMsg, "%d/%m/%y > %Hh%i") as dateMsg, idProfil_recepteur, idProfil_emetteur, contenu FROM chat_msg WHERE ('.$idPseudo.' = chat_msg.idProfil_emetteur AND '.$tchat_do.' = chat_msg.idProfil_recepteur) OR ('.$tchat_do.' = chat_msg.idProfil_emetteur AND '.$idPseudo.' = chat_msg.idProfil_recepteur)');
@@ -246,7 +233,7 @@
 											$MsgLu = mysqli_query($bdd,'UPDATE chat_msg SET lu = 1 WHERE lu = 0 AND idProfil_recepteur = '.$idPseudo.' AND idProfil_emetteur = '.$imagess['idProfil'].';');
 											?>
 											
-												<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 80px;">
+												<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 100px;">
 
 													<?php if($donnees['idProfil_emetteur'] == $idPseudo){ ?>
 														<div class="toast" style="position: absolute; top: 0; right: 0;" data-autohide="false"> <!--DROITE-->
@@ -307,14 +294,9 @@
 
 						</div>
 
-
-
-
 					</div>
 
 				</div>
-
-
 
 			</div>
 
@@ -328,7 +310,6 @@
 <script>
 	//Affichage des Toasts
 	$('.toast').toast('show');
-
 </script>
 
 </body>
