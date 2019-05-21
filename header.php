@@ -110,13 +110,17 @@
 							<?php 
 								if(!empty($_SESSION['idprofil']))
 								{
+									$message = mysqli_query($bdd, 'SELECT COUNT(idChatMsg) AS Msg FROM chat_msg WHERE idProfil_recepteur = '.$_SESSION['idprofil'].' AND lu = 0;');
+									$message = mysqli_fetch_array($message, MYSQLI_ASSOC);
 									echo '	<li>
 												<a class="nav-link '.$profil_class.'" href="profil.php?idprofil='.$_SESSION['idprofil'].'">Mon profil</a>
-											</li>
-											<li>
-												<a class="nav-link '.$tchat_class.'" href="tchat.php">Tchat</a>
-											</li>
-											<li class="nav-item">
+											</li>';
+									if($message['Msg'] != 0){
+										echo '<li><a class="nav-link '.$tchat_class.'" href="tchat.php">Tchat <span class="badge badge-success">'.$message['Msg'].'</span></a></li>';
+									}else{
+										echo '<li><a class="nav-link '.$tchat_class.'" href="tchat.php">Tchat</a></li>';
+									}
+									echo '	<li class="nav-item">
 												<a class="nav-link" href="deconnexion.php">Deconnexion</a>
 											</li>';
 								}
