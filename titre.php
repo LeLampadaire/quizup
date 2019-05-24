@@ -5,7 +5,7 @@
       require_once('configuration.php');
       require_once('baseDeDonnee.php');
 
-    $titreTheme = mysqli_query($bdd, 'SELECT titre.idTitre, titre.libelleTitre, titre.niveauRequis FROM titre WHERE '.$_GET['idtheme'].' = titre.idTheme ORDER BY libelleTitre ASC;');
+    $titreTheme = mysqli_query($bdd, 'SELECT titre.idTitre as idtitremodif, titre.libelleTitre, titre.niveauRequis FROM titre WHERE '.$_GET['idtheme'].' = titre.idTheme ORDER BY libelleTitre ASC;');
 
     $theme_class = "active";
 
@@ -76,7 +76,7 @@
                   </div>
                   <div class="modal-footer">
                       <?php
-                          echo '<a href="ajouter_titre.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Ajouter un titre".'</button></a>';
+                          echo '<a href="mise_a_jour_Titre.php?idtitre='.$recup['idtitremodif'].'"><button  class="btn btn-dark float-right">'."Modifier un titre".'</button></a>';
                           echo '<a href="menu_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Retour".'</button></a>';
                       ?>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -92,7 +92,8 @@
 
         <div class="card-footer">
           <?php
-            echo '<a href="menu_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Retour".'</button></a>';
+            echo '<a href="ajouter_titre.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Ajouter un titre".'</button></a>';
+            echo '<a href="menu_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-left">'."Retour".'</button></a>';
           ?>
         </div>
     </section>

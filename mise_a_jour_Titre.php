@@ -6,7 +6,7 @@
       require_once('configuration.php');
 
       if(isset($_GET) && !empty($_GET)){
-        $ajouterquestion_idTheme = $_GET['idtheme'];
+        $ajouterquestion_idTheme = $_GET['idtitre'];
       }
 
       $ancien_question = mysqli_query($bdd, 'SELECT titre.libelleTitre as ancienLibelle, titre.niveauRequis as ancienAnswer FROM titre WHERE '.$_GET['idtitre'].' = titre.idTitre;');
@@ -91,6 +91,13 @@
             </div>
           </div>
         </div>
+
+        <div class="row justify-content-md-center">
+          <div class="col-7 centered">
+            <button type="submit" class="btn btn-light">Modifier votre titre</button>
+          </div>
+        </div>
+      </form>
 
     </section>
     <!-- Footer -->
