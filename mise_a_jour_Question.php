@@ -76,11 +76,22 @@
         }
 
         //Si il n'y a aucune erreur, insertion dans la BDD et redirection vers les thèmes
-        if($erreur == 0){
+        if($erreur == 0)
+        {
           //Insertion des données dans la table question
-
+          
           mysqli_query($bdd, 'UPDATE `question` SET `libelleQuestion` = "'.utf8_decode ( $_POST['libelle']).'", `answer` = "'.utf8_decode ( $_POST['answer']).'", `distracteur01` = "'.utf8_decode ( $_POST['dist1']).'", `distracteur02` = "'.utf8_decode ( $_POST['dist2']).'", `distracteur03` = "'.utf8_decode ( $_POST['dist3']).'" WHERE question.idQuestion = '.$_GET['idquestion'].';');
           mysqli_query($bdd, 'UPDATE `theme` SET `dateUpdated`= CURRENT_TIMESTAMP() WHERE `idTheme` = '.$ajouterquestion_idTheme.'');
+          if(isset($_FILES['photo']) && $_FILES['photo']['error'] == 0 )
+          {
+            $extension_upload = strtolower(  substr(  strrchr($_FILES['photo']['name'], '.')  ,1)  );
+            if($extension_upload == "jpg" || $extension_upload == "png" || $extension_upload == "jpeg" || $extension_upload == "svg")
+            {
+              $nomphoto = "images/question/".$_GET['idquestion'].".{$extension_upload}";
+              $move = move_uploaded_file($_FILES['photo']['tmp_name'],$nomphoto);
+              mysqli_query($bdd, 'UPDATE `question` SET `illustration` = "'.$nomphoto.'" WHERE question.idQuestion = '.$_GET['idquestion'].';');
+            }
+          }
 
           header('Location: themes.php');
         }
@@ -106,7 +117,7 @@
         </div>
       <div class="card-body">
         <br>
-      <form method="POST">
+      <form method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
           <div class="row justify-content-md-center">
@@ -123,6 +134,16 @@
 
 
         <!-- <input type="file" ========================== -->
+        <div class="form-group">
+          <div class="row justify-content-md-center">
+            <div class="col-7 centered">
+              <label for="photo">Illustration</label><br>
+              <input id="photo" name="photo" type="file">
+                <br>
+            </div>
+          </div>
+        </div>
+
 
         <div class="form-group">
           <div class="row justify-content-md-center">
