@@ -121,6 +121,9 @@
           </div>
         </div>
 
+
+        <!-- <input type="file" ========================== -->
+
         <div class="form-group">
           <div class="row justify-content-md-center">
             <div class="col-7 centered">
