@@ -72,8 +72,8 @@
                         </div>
                         <div class="modal-body">
                             <?php
-                                if(!empty($question['illustrat'])){
-                                  echo '<img class"rounded border border-warning" width="200px" height="200px" alt="Image de profil" src="'.$question['illustrat'].'">';
+                                if(!empty($recup['illustrat'])){
+                                  echo '<img class"rounded border border-warning" width="200px" height="200px" alt="Image de profil" src="'.$recup['illustrat'].'">';
                                   echo '<hr>';
                                 }
                                 echo 'Réponse : ' . $recup['answer'] . '<br>';
