@@ -43,7 +43,7 @@
 
           mysqli_query($bdd, 'UPDATE `titre` SET `libelleTitre` = "'.utf8_decode ( $_POST['libelle']).'", `niveauRequis` = "'.utf8_decode ( $_POST['answer']).'" WHERE titre.idTitre = '.$_GET['idtitre'].';');
 
-          header('Location: titre.php');
+          header('Location: titre.php?idtheme='.$_GET['idtheme'].'');
         }
       }
     ?>

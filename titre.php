@@ -76,7 +76,8 @@
                   </div>
                   <div class="modal-footer">
                       <?php
-                          echo '<a href="mise_a_jour_Titre.php?idtitre='.$recup['idtitremodif'].'"><button  class="btn btn-dark float-right">'."Modifier un titre".'</button></a>';
+                          echo '<a href="mise_a_jour_Titre.php?idtitre='.$recup['idtitremodif'].'&idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Modifier ce titre".'</button></a>';
+                          echo '<a href="supprimer_titre.php?idtitre='.$recup['idtitremodif'].'"><button  class="btn btn-dark float-right">'."Supprimer ce titre".'</button></a>';
                           echo '<a href="menu_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-dark float-right">'."Retour".'</button></a>';
                       ?>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

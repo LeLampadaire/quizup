@@ -8,6 +8,10 @@
     $ancien_themes = mysqli_query($bdd, 'SELECT theme.libelleTheme as ancienLibelle, theme.description as ancienDescription, categorie.libelleCategorie as ancienCategorie, theme.idProfil as ThemeidProfil FROM theme INNER JOIN categorie ON(theme.idCategorie = categorie.idCategorie)WHERE '.$_GET['idtheme'].' = theme.idTheme;');
     $ancien_themes = mysqli_fetch_array($ancien_themes, MYSQLI_ASSOC);
 
+    $suivreAff = mysqli_query($bdd, 'SELECT COUNT(suivre.`idProfil`) as nbProfil FROM theme INNER JOIN suivre ON(theme.idTheme = suivre.idTheme) WHERE '.$_SESSION['idprofil'].' = suivre.idProfil;');
+    $suivreAff = mysqli_fetch_array($suivreAff, MYSQLI_ASSOC);
+    $suivreAff = $suivreAff['nbProfil'];
+
     $theme_class = "active";
     ?>
 
@@ -35,7 +39,14 @@
             }else{
               if($ancien_themes['ThemeidProfil'] <> $_SESSION['idprofil']){
                 echo '<a href="creation_partie.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Play".'</button></a>';
-                echo '<a href="suivre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Suivre".'</button></a><br><br>';
+
+                if($suivreAff != 0){
+                  echo '<a href="desuivre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Ne plus suivre".'</button></a><br><br>';
+                }else{
+                  echo '<a href="suivre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Suivre".'</button></a><br><br>';
+                }
+
+
                 echo '<a href="titre.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Les titres".'</button></a>';
               }else{
                 echo '<a href="creation_partie.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Play".'</button></a>';
