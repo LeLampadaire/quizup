@@ -5,7 +5,7 @@
     require_once('configuration.php'); 
     require_once('baseDeDonnee.php'); 
     
-    $question = mysqli_query($bdd, 'SELECT question.idQuestion, question.libelleQuestion, question.answer, question.distracteur01, question.distracteur02, question.distracteur03 FROM question INNER JOIN theme ON (question.idTheme = theme.idTheme) WHERE '.$_GET['idtheme'].' = question.idTheme;');
+    $question = mysqli_query($bdd, 'SELECT question.idQuestion, question.illustration as illustrat, question.libelleQuestion, question.answer, question.distracteur01, question.distracteur02, question.distracteur03 FROM question INNER JOIN theme ON (question.idTheme = theme.idTheme) WHERE '.$_GET['idtheme'].' = question.idTheme;');
 
     $theme_class = "active";
     if(isset($_GET['erreur']) && $_GET['erreur'] == 1){
@@ -72,6 +72,10 @@
                         </div>
                         <div class="modal-body">
                             <?php
+                                if(!empty($question['illustrat'])){
+                                  echo '<img class"rounded border border-warning" width="200px" height="200px" alt="Image de profil" src="'.$question['illustrat'].'">';
+                                  echo '<hr>';
+                                }
                                 echo 'Réponse : ' . $recup['answer'] . '<br>';
                                 echo 'Distracteur 1 : ' . $recup['distracteur01'] . '<br>';
                                 echo 'Distracteur 2 : ' . $recup['distracteur02'] . '<br>';
