@@ -12,4 +12,6 @@
 
 	//REGEX Ajout_Themes
 	$pattern_libelle = "#([[:alnum:]éèêëÉËÈ_@]){3,50}#";
+	$pattern_verif = "#{1,50}#";
+	$pattern_niveau = "#^\+?\d+$#"
 ?>

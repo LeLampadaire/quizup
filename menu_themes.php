@@ -5,10 +5,10 @@
     require_once('configuration.php'); 
     require_once('baseDeDonnee.php');
 
-    $ancien_themes = mysqli_query($bdd, 'SELECT theme.libelleTheme as ancienLibelle, theme.description as ancienDescription, categorie.libelleCategorie as ancienCategorie, theme.idProfil as ThemeidProfil FROM theme INNER JOIN categorie ON(theme.idCategorie = categorie.idCategorie)WHERE '.$_GET['idtheme'].' = theme.idTheme;');
-    $ancien_themes = mysqli_fetch_array($ancien_themes, MYSQLI_ASSOC);
+    $affTheme = mysqli_query($bdd, 'SELECT theme.libelleTheme as ancienLibelle, theme.logo as illustrat, theme.description as ancienDescription, categorie.libelleCategorie as ancienCategorie, theme.idProfil as ThemeidProfil FROM theme INNER JOIN categorie ON(theme.idCategorie = categorie.idCategorie)WHERE '.$_GET['idtheme'].' = theme.idTheme;');
+    $affTheme = mysqli_fetch_array($affTheme, MYSQLI_ASSOC);
 
-    $suivreAff = mysqli_query($bdd, 'SELECT COUNT(suivre.`idProfil`) as nbProfil FROM theme INNER JOIN suivre ON(theme.idTheme = suivre.idTheme) WHERE '.$_SESSION['idprofil'].' = suivre.idProfil;');
+    $suivreAff = mysqli_query($bdd, 'SELECT COUNT(suivre.`idProfil`) as nbProfil FROM theme INNER JOIN suivre ON(theme.idTheme = suivre.idTheme) WHERE '.$_SESSION['idprofil'].' = suivre.idProfil AND theme.idTheme = '.$_GET['idtheme'].';');
     $suivreAff = mysqli_fetch_array($suivreAff, MYSQLI_ASSOC);
     $suivreAff = $suivreAff['nbProfil'];
 
@@ -16,7 +16,7 @@
     ?>
 
 <head>
-	<title><?php echo $nomSite .' - '. $ancien_themes['ancienLibelle']; ?></title>
+	<title><?php echo $nomSite .' - '. $affTheme['ancienLibelle']; ?></title>
 	<meta charset="utf-8">
   	<?php require_once('styles.php'); ?>
 </head>
@@ -28,7 +28,7 @@
     <section class="container text-center mt-5 text-white principale">
       <div class="card text-center bg-dark">
         <div class="card-header">
-          <h2><?php echo $ancien_themes['ancienLibelle']; ?></h2>
+          <h2><?php echo $affTheme['ancienLibelle']; ?></h2>
         </div>
         <div class="card-body">
           <?php
@@ -37,7 +37,13 @@
                       Vous devez être connecté pour pouvoir voir les thèmes !
                     </div>';
             }else{
-              if($ancien_themes['ThemeidProfil'] <> $_SESSION['idprofil']){
+
+              if(!empty($affTheme['illustrat'])){
+                echo '<img class"rounded border border-warning" width="200px" height="200px" alt="Image de profil" src="'.$affTheme['illustrat'].'">';
+                echo '<hr>';
+              }
+
+              if($affTheme['ThemeidProfil'] <> $_SESSION['idprofil']){
                 echo '<a href="creation_partie.php?idtheme='.$_GET['idtheme'].'"><button class="btn btn-outline-light">'."Play".'</button></a>';
 
                 if($suivreAff != 0){
@@ -58,11 +64,11 @@
                 echo '<a href="supprimer_themes.php?idtheme='.$_GET['idtheme'].'"><button  class="btn btn-outline-light">'."Supprimer ce thème".'</button></a><br><br>';
               }
 
-              if(empty($ancien_themes['ancienDescription'])){
+              if(empty($affTheme['ancienDescription'])){
                 echo "Aucune description";
               }else{
                 echo '<h3>'."Description :".'</h3>';
-                echo $ancien_themes['ancienDescription'];
+                echo $affTheme['ancienDescription'];
               }
             }
             ?>

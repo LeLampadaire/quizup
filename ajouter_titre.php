@@ -32,7 +32,7 @@
           $erreur=1;
         }
 
-        if(preg_match($pattern_libelle, $_POST['answer'])){
+        if(preg_match($pattern_niveau, $_POST['answer'])){
           $valid_answer = 'class="form-control is-valid text-success"';
         }else{
           $valid_answer = 'class="form-control is-invalid text-danger';

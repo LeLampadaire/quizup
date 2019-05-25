@@ -20,7 +20,7 @@
         $description = $_POST['description'];
         $erreur = 0;
 
-        if(preg_match($pattern_libelle, $_POST['libelle'])){
+        if(preg_match($pattern_verif, $_POST['libelle'])){
           $valid_libelle = 'class="form-control is-valid text-success"';
         }else{
           $valid_libelle = 'class="form-control is-invalid text-danger';

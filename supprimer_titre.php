@@ -9,17 +9,17 @@
         $ajouterquestion_idTheme = $_GET['idtitre'];
       }
 
-      $supprimer_categorie = mysqli_query($bdd, 'SELECT COUNT(suivre.`idProfil`) as nbProfil FROM titre INNER JOIN theme ON (titre.`idTheme` = theme.`idTheme`) INNER JOIN suivre ON (theme.`idProfil` = suivre.`idProfil`) WHERE titre.`idTitre` = '.$_GET['idtitre'].';');
-      $supprimer_categorie = mysqli_fetch_array($supprimer_categorie, MYSQLI_ASSOC);
-      $supprimer_categorie = $supprimer_categorie['nbProfil'];
-      var_dump($supprimer_categorie);
+      $supprimer_titre = mysqli_query($bdd, 'SELECT COUNT(`idProfil`) as nbProfil FROM titre INNER JOIN remporter ON (titre.`idTitre` = remporter.`idTitre`) WHERE titre.`idTitre` = '.$_GET['idtitre'].';');
+      $supprimer_titre = mysqli_fetch_array($supprimer_titre, MYSQLI_ASSOC);
+      $supprimer_titre = $supprimer_titre['nbProfil'];
+      var_dump($supprimer_titre);
 
-      if($supprimer_categorie != 0){
+      if($supprimer_titre != 0){
         $erreur = 1;
         header('Location: titre.php?erreur='.$erreur.'');
       }else{
         mysqli_query($bdd, 'DELETE FROM `titre` WHERE `idTitre` IN ('.$_GET['idtitre'].');');
-        header('Location: titre.php');
+        header('Location: themes.php');
       }
     ?>
 

@@ -205,6 +205,8 @@
 						echo '<a href="abonnements.php?idprofil='.$_GET['idprofil'].'"><button class="btn btn-outline-light">Abonnements</button></a> ';
 						/*MES BLOCAGES*/
 						echo '<a href="blocages.php?idprofil='.$_GET['idprofil'].'"><button class="btn btn-outline-light">Blocages</button></a>';
+						/*MES THEMES SUIVIS*/
+						echo '<a href="suivre_theme.php?idprofil='.$_GET['idprofil'].'"><button class="btn btn-outline-light">Thèmes suivis</button></a>';
 					} ?>
 				<a href=<?php echo '"historique.php?idprofil='.$idprofil.'"'; ?>><button class="btn btn-outline-light">Historique des parties</button></a>
 

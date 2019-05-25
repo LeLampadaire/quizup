@@ -36,28 +36,28 @@
           $erreur=1;
         }
 
-        if(preg_match($pattern_libelle, $_POST['answer'])){
+        if(preg_match($pattern_verif, $_POST['answer'])){
           $valid_answer = 'class="form-control is-valid text-success"';
         }else{
           $valid_answer = 'class="form-control is-invalid text-danger';
           $erreur=1;
         }
 
-        if(preg_match($pattern_libelle, $_POST['dist1'])){
+        if(preg_match($pattern_verif, $_POST['dist1'])){
           $valid_dist1 = 'class="form-control is-valid text-success"';
         }else{
           $valid_dist1 = 'class="form-control is-invalid text-danger';
           $erreur=1;
         }
 
-        if(preg_match($pattern_libelle, $_POST['dist2'])){
+        if(preg_match($pattern_verif, $_POST['dist2'])){
           $valid_dist2 = 'class="form-control is-valid text-success"';
         }else{
           $valid_dist2 = 'class="form-control is-invalid text-danger';
           $erreur=1;
         }
 
-        if(preg_match($pattern_libelle, $_POST['dist3'])){
+        if(preg_match($pattern_verif, $_POST['dist3'])){
           $valid_dist3 = 'class="form-control is-valid text-success"';
         }else{
           $valid_dist3 = 'class="form-control is-invalid text-danger';
@@ -125,8 +125,6 @@
           </div>
         </div>
 
-
-<!-- <input type="file" ========================== -->
         <div class="form-group">
           <div class="row justify-content-md-center">
             <div class="col-7 centered">
