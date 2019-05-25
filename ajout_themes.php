@@ -32,7 +32,20 @@
           //Insertion des données dans la table theme
 
           mysqli_query($bdd, 'INSERT INTO `theme` (`idTheme`, `libelleTheme`, `description`, `logo`, `dateUpdated`, `idCategorie`, `idProfil`) VALUES (NULL, "'.utf8_decode ( $_POST['libelle']).'", "'.utf8_decode ( $_POST['description']).'", "images/theme/null.jpg", CURRENT_TIMESTAMP(), '.$_POST['categorie'].', '.$ajoutTheme_profil.');');
-          
+          $idtheme = mysqli_query($bdd, 'SELECT idTheme FROM theme WHERE libelleTheme = "'.utf8_decode ( $_POST['libelle']).'";');
+          $idtheme = mysqli_fetch_assoc($idtheme);
+          $idtheme = (int)$idtheme['idTheme'];
+    
+          if(isset($_FILES['photo']) && $_FILES['photo']['error'] == 0 )
+          {
+            $extension_upload = strtolower(  substr(  strrchr($_FILES['photo']['name'], '.')  ,1)  );
+            if($extension_upload == "jpg" || $extension_upload == "png" || $extension_upload == "jpeg" || $extension_upload == "svg")
+            {
+              $nomphoto = "images/theme/".$idtheme.".{$extension_upload}";
+              $move = move_uploaded_file($_FILES['photo']['tmp_name'],$nomphoto);
+              mysqli_query($bdd, 'UPDATE `theme` SET `logo` = "'.$nomphoto.'" WHERE theme.idTheme = '.$idtheme.';');
+            }
+          }
           header('Location: themes.php');
         }
       }
@@ -57,7 +70,7 @@
         </div>
       <div class="card-body">
         <br>
-      <form action="ajout_themes.php" method="POST">
+      <form action="ajout_themes.php" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
           <div class="row justify-content-md-center">
@@ -73,6 +86,15 @@
         </div>
 
                 <!-- <input type="file" ========================== -->
+        <div class="form-group">
+          <div class="row justify-content-md-center">
+            <div class="col-7 centered">
+              <label for="photo">Illustration</label><br>
+              <input id="photo" name="photo" type="file">
+                <br>
+            </div>
+          </div>
+        </div>
 
         <div class="form-group">
           <div class="row justify-content-md-center">

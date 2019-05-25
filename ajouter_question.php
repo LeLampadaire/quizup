@@ -70,8 +70,23 @@
 
           mysqli_query($bdd, 'INSERT INTO question (idQuestion, Illustration, libelleQuestion, answer, distracteur01, distracteur02, distracteur03, idTheme) VALUES (NULL, NULL, "'.$libelle.'", "'.$answer.'", "'.$dist1.'", "'.$dist2.'", "'.$dist3.'", '.$ajouterquestion_idTheme.')');
           mysqli_query($bdd, 'UPDATE `theme` SET `dateUpdated`= CURRENT_TIMESTAMP() WHERE `idTheme` = '.$ajouterquestion_idTheme.'');
+          $idquestion = mysqli_query($bdd, 'SELECT idQuestion FROM question WHERE libelleQuestion = "'.$libelle.'";');
+          $idquestion = mysqli_fetch_assoc($idquestion);
+          $idquestion = (int)$idquestion['idQuestion'];
 
-          header('Location: themes.php');
+          if(isset($_FILES['photo']) && $_FILES['photo']['error'] == 0 )
+          {
+            $extension_upload = strtolower(  substr(  strrchr($_FILES['photo']['name'], '.')  ,1)  );
+            if($extension_upload == "jpg" || $extension_upload == "png" || $extension_upload == "jpeg" || $extension_upload == "svg")
+            {
+              echo"TESTESTEST";
+              $nomphoto = "images/question/".$idquestion.".{$extension_upload}";
+              $move = move_uploaded_file($_FILES['photo']['tmp_name'],$nomphoto);
+              $insert = mysqli_query($bdd, 'UPDATE `question` SET `illustration` = "'.$nomphoto.'" WHERE question.idQuestion = '.$idquestion.';');
+              var_dump($insert);
+            }
+          }
+          //header('Location: themes.php');
         }
       }
     ?>
@@ -95,7 +110,7 @@
         </div>
       <div class="card-body">
         <br>
-      <form method="POST">
+      <form method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
           <div class="row justify-content-md-center">
@@ -112,7 +127,15 @@
 
 
 <!-- <input type="file" ========================== -->
-
+        <div class="form-group">
+          <div class="row justify-content-md-center">
+            <div class="col-7 centered">
+              <label for="photo">Illustration</label><br>
+              <input id="photo" name="photo" type="file">
+                <br>
+            </div>
+          </div>
+        </div>
 
         <div class="form-group">
           <div class="row justify-content-md-center">

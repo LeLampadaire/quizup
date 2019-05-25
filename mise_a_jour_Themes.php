@@ -35,6 +35,16 @@
           //Insertion des données dans la table theme
 
           mysqli_query($bdd, 'UPDATE `theme` SET `libelleTheme` = "'.utf8_decode ( $_POST['libelle']).'", `description` = "'.utf8_decode ( $_POST['description']).'", `dateUpdated` = CURRENT_TIMESTAMP(), `idCategorie` = '.$_POST['categorie'].' WHERE theme.idTheme = '.$_GET['idtheme'].';');
+          if(isset($_FILES['photo']) && $_FILES['photo']['error'] == 0 )
+          {
+            $extension_upload = strtolower(  substr(  strrchr($_FILES['photo']['name'], '.')  ,1)  );
+            if($extension_upload == "jpg" || $extension_upload == "png" || $extension_upload == "jpeg" || $extension_upload == "svg")
+            {
+              $nomphoto = "images/theme/".$_GET['idtheme'].".{$extension_upload}";
+              $move = move_uploaded_file($_FILES['photo']['tmp_name'],$nomphoto);
+              mysqli_query($bdd, 'UPDATE `theme` SET `logo` = "'.$nomphoto.'" WHERE theme.idTheme = '.$_GET['idtheme'].';');
+            }
+          }
           header('Location: themes.php');
         }
       }
@@ -59,7 +69,7 @@
         </div>
       <div class="card-body">
         <br>
-      <form method="POST">
+      <form method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
           <div class="row justify-content-md-center">
@@ -74,7 +84,16 @@
           </div>
         </div>
 
-                <!-- <input type="file" ========================== -->
+        <!-- <input type="file" ========================== -->
+        <div class="form-group">
+          <div class="row justify-content-md-center">
+            <div class="col-7 centered">
+              <label for="photo">Illustration</label><br>
+              <input id="photo" name="photo" type="file">
+                <br>
+            </div>
+          </div>
+        </div>
 
         <div class="form-group">
           <div class="row justify-content-md-center">
